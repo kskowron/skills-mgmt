@@ -20,6 +20,8 @@ class m150119_182513_skills_tables extends Migration
                 [
                 'id' => Schema::TYPE_PK,
                 'name' => Schema::TYPE_STRING.'(45) NOT NULL',
+                'created_at' => Schema::TYPE_INTEGER.' NOT NULL',
+                'updated_at' => Schema::TYPE_INTEGER.' NOT NULL',
                 ], $tableOptions);
             $this->createIndex('I_location_name', '{{%location}}', ['name'],
                 true);
@@ -48,6 +50,8 @@ class m150119_182513_skills_tables extends Migration
                 [
                 'id' => Schema::TYPE_PK,
                 'name' => Schema::TYPE_STRING.'(45) NOT NULL',
+                'created_at' => Schema::TYPE_INTEGER.' NOT NULL',
+                'updated_at' => Schema::TYPE_INTEGER.' NOT NULL',
                 ], $tableOptions);
             $this->createIndex('I_category_name', '{{%category}}', ['name'],
                 true);
@@ -58,6 +62,8 @@ class m150119_182513_skills_tables extends Migration
                 'id' => Schema::TYPE_PK,
                 'name' => Schema::TYPE_STRING.'(45) NOT NULL',
                 'category_id' => Schema::TYPE_INTEGER.' NOT NULL',
+                'created_at' => Schema::TYPE_INTEGER.' NOT NULL',
+                'updated_at' => Schema::TYPE_INTEGER.' NOT NULL',
                 ], $tableOptions);
             $this->createIndex('I_skill_name', '{{%skill}}', ['name'],
                 true);
@@ -69,6 +75,8 @@ class m150119_182513_skills_tables extends Migration
                 [
                 'id' => Schema::TYPE_PK,
                 'name' => Schema::TYPE_STRING.'(45) NOT NULL',
+                'created_at' => Schema::TYPE_INTEGER.' NOT NULL',
+                'updated_at' => Schema::TYPE_INTEGER.' NOT NULL',
                 ], $tableOptions);
             $this->createIndex('I_skill_level_name', '{{%skill_level}}', ['name'],
                 true);
@@ -80,6 +88,8 @@ class m150119_182513_skills_tables extends Migration
                 'skill_id' => Schema::TYPE_INTEGER.' NOT NULL',
                 'skill_level_id' => Schema::TYPE_INTEGER.' NOT NULL',
                 'employee_id' => Schema::TYPE_INTEGER.' NOT NULL',
+                'created_at' => Schema::TYPE_INTEGER.' NOT NULL',
+                'updated_at' => Schema::TYPE_INTEGER.' NOT NULL',
                 ], $tableOptions);
             $this->addForeignKey('F_employee_skill2skill', '{{%employee_skill}}',
                 'skill_id', '{{%skill}}', 'id', 'RESTRICT', 'RESTRICT');
