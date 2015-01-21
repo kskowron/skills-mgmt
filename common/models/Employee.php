@@ -2,13 +2,14 @@
 
 namespace common\models;
 
-use Yii;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "employee".
  */
 class Employee extends \common\models\base\Employee
 {
+
     /**
      * @inheritdoc
      */

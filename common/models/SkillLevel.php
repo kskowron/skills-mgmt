@@ -2,13 +2,14 @@
 
 namespace common\models;
 
-use Yii;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "skill_level".
  */
 class SkillLevel extends \common\models\base\SkillLevel
 {
+
     /**
      * @inheritdoc
      */
