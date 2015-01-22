@@ -35,8 +35,8 @@ class Employee extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'location_id', 'created_at', 'updated_at'], 'integer'],
-            [['location_id', 'firstName', 'lastName', 'created_at', 'updated_at'], 'required'],
+            [['user_id', 'location_id', 'primary_competence_id', 'secondary_competence_id', 'created_at', 'updated_at'], 'integer'],
+            [['location_id', 'primary_competence_id', 'firstName', 'lastName', 'created_at', 'updated_at'], 'required'],
             [['firstName', 'lastName'], 'string', 'max' => 60]
         ];
     }
@@ -50,6 +50,8 @@ class Employee extends \yii\db\ActiveRecord
             'id' => Yii::t('skills', 'ID'),
             'user_id' => Yii::t('skills', 'User ID'),
             'location_id' => Yii::t('skills', 'Location ID'),
+            'primary_competence_id' => Yii::t('skills', 'Primary competence ID'),
+            'secondary_competence_id' => Yii::t('skills', 'Secondary competence ID'),
             'firstName' => Yii::t('skills', 'First Name'),
             'lastName' => Yii::t('skills', 'Last Name'),
             'created_at' => Yii::t('skills', 'Created At'),
@@ -79,5 +81,15 @@ class Employee extends \yii\db\ActiveRecord
     public function getEmployeeSkills()
     {
         return $this->hasMany(\common\models\EmployeeSkill::className(), ['employee_id' => 'id']);
+    }
+    
+    public function getPrimaryCompetence()
+    {
+        return $this->hasOne(\common\models\Competence::className(), ['id', 'primary_competence_id']) ;
+    }
+    
+    public function getSecondaryCompetence()
+    {
+        return $this->hasOne(\common\models\Competence::className(), ['id', 'secondary_competence_id']) ;
     }
 }
