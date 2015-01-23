@@ -32,6 +32,15 @@ AppAsset::register($this);
                     'class' => 'navbar-inverse navbar-fixed-top',
                 ],
             ]);
+            //Menu po lewej stronie
+            $menuItems = [
+                ['label' => 'Frontend', 'url' => \yii\helpers\Url::to('frontend/web', TRUE)],
+            ];
+            echo Nav::widget([
+                'options' => ['class' => 'navbar-nav navbar-left'],
+                'items' => $menuItems,
+            ]);
+
             $menuItems = [
                 ['label' => 'Home', 'url' => ['/site/index']],
             ];
