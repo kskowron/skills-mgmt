@@ -13,6 +13,18 @@ class Location extends \common\models\base\Location
     /**
      * @inheritdoc
      */
+    public function rules()
+    {
+        return [
+            [['name'], 'required'],
+            [['name'], 'string', 'max' => 45],
+            [['name'], 'unique']
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function behaviors()
     {
         return [
