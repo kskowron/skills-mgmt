@@ -35,8 +35,8 @@ class Employee extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'location_id', 'created_at', 'updated_at'], 'integer'],
-            [['location_id', 'firstName', 'lastName', 'created_at', 'updated_at'], 'required'],
+            [['user_id', 'location_id', 'primary_competence_id', 'secondary_competence_id', 'created_at', 'updated_at'], 'integer'],
+            [['location_id', 'primary_competence_id', 'firstName', 'lastName', 'created_at', 'updated_at'], 'required'],
             [['firstName', 'lastName'], 'string', 'max' => 60]
         ];
     }
@@ -80,4 +80,5 @@ class Employee extends \yii\db\ActiveRecord
     {
         return $this->hasMany(\common\models\EmployeeSkill::className(), ['employee_id' => 'id']);
     }
+
 }
