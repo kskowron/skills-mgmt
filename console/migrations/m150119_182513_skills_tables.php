@@ -87,6 +87,8 @@ class m150119_182513_skills_tables extends Migration
                 'id' => Schema::TYPE_PK,
                 'skill_id' => Schema::TYPE_INTEGER.' NOT NULL',
                 'skill_level_id' => Schema::TYPE_INTEGER.' NOT NULL',
+                'years_of_experience' => Schema::TYPE_DECIMAL.'(5,2)',
+                'last_activity'=> Schema::TYPE_SMALLINT,
                 'employee_id' => Schema::TYPE_INTEGER.' NOT NULL',
                 'created_at' => Schema::TYPE_INTEGER.' NOT NULL',
                 'updated_at' => Schema::TYPE_INTEGER.' NOT NULL',
@@ -99,7 +101,30 @@ class m150119_182513_skills_tables extends Migration
 
             $this->addForeignKey('F_employee_skill2employee', '{{%employee_skill}}',
                 'employee_id', '{{%employee}}', 'id', 'RESTRICT', 'RESTRICT');
-            
+
+
+                        $this->createTable('{{%business_profile}}', [
+                'id' => Schema::TYPE_PK,
+                'name' => Schema::TYPE_STRING.'(45) NOT NULL'
+                ], $tableOptions
+            );
+            $this->createIndex('I_business_profile', '{{%business_profile}}', 'name', true);
+
+            $this->createTable('{{%employee_business_profile}}', [
+                'id' => Schema::TYPE_PK,
+                'business_profile_id' => Schema::TYPE_INTEGER.' NOT NULL',
+                'employee_id' => Schema::TYPE_INTEGER.' NOT NULL',
+                'profile_order' => Schema::TYPE_STRING.'(1) NOT NULL'
+            ], $tableOptions);
+
+            $this->addForeignKey('F_employee_busines_profile2profile', '{{%employee_business_profile}}',
+                    'business_profile_id', '{{%business_profile}}', 'id', 'RESTRICT', 'RESTRICT');
+
+            $this->addForeignKey('F_employee_busines_profile2employee', '{{%employee_business_profile}}',
+                    'employee_id', '{{%employee}}', 'id', 'RESTRICT', 'RESTRICT');
+
+
+
         } catch (Exception $exc) {
             return FALSE;
         }
@@ -109,6 +134,9 @@ class m150119_182513_skills_tables extends Migration
 
     public function safeDown()
     {
+        $this->dropTable('{{%employee_business_profile}}');
+        $this->dropTable('{{%business_profile}}');
+
         $this->dropTable('{{%employee_skill}}');
         $this->dropTable('{{%employee}}');
         $this->dropTable('{{%skill}}');

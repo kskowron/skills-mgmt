@@ -17,6 +17,7 @@ use Yii;
  *
  * @property \common\models\Location $location
  * @property \common\models\User $user
+ * @property \common\models\EmployeeBusinessProfile[] $employeeBusinessProfiles
  * @property \common\models\EmployeeSkill[] $employeeSkills
  */
 class Employee extends \yii\db\ActiveRecord
@@ -35,8 +36,8 @@ class Employee extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'location_id', 'primary_competence_id', 'secondary_competence_id', 'created_at', 'updated_at'], 'integer'],
-            [['location_id', 'primary_competence_id', 'firstName', 'lastName', 'created_at', 'updated_at'], 'required'],
+            [['user_id', 'location_id', 'created_at', 'updated_at'], 'integer'],
+            [['location_id', 'firstName', 'lastName', 'created_at', 'updated_at'], 'required'],
             [['firstName', 'lastName'], 'string', 'max' => 60]
         ];
     }
@@ -76,9 +77,16 @@ class Employee extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
+    public function getEmployeeBusinessProfiles()
+    {
+        return $this->hasMany(\common\models\EmployeeBusinessProfile::className(), ['employee_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getEmployeeSkills()
     {
         return $this->hasMany(\common\models\EmployeeSkill::className(), ['employee_id' => 'id']);
     }
-
 }

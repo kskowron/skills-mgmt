@@ -10,6 +10,8 @@ use Yii;
  * @property integer $id
  * @property integer $skill_id
  * @property integer $skill_level_id
+ * @property string $years_of_experience
+ * @property integer $last_activity
  * @property integer $employee_id
  * @property integer $created_at
  * @property integer $updated_at
@@ -35,7 +37,8 @@ class EmployeeSkill extends \yii\db\ActiveRecord
     {
         return [
             [['skill_id', 'skill_level_id', 'employee_id', 'created_at', 'updated_at'], 'required'],
-            [['skill_id', 'skill_level_id', 'employee_id', 'created_at', 'updated_at'], 'integer']
+            [['skill_id', 'skill_level_id', 'last_activity', 'employee_id', 'created_at', 'updated_at'], 'integer'],
+            [['years_of_experience'], 'number']
         ];
     }
 
@@ -48,6 +51,8 @@ class EmployeeSkill extends \yii\db\ActiveRecord
             'id' => Yii::t('skills', 'ID'),
             'skill_id' => Yii::t('skills', 'Skill ID'),
             'skill_level_id' => Yii::t('skills', 'Skill Level ID'),
+            'years_of_experience' => Yii::t('skills', 'Years Of Experience'),
+            'last_activity' => Yii::t('skills', 'Last Activity'),
             'employee_id' => Yii::t('skills', 'Employee ID'),
             'created_at' => Yii::t('skills', 'Created At'),
             'updated_at' => Yii::t('skills', 'Updated At'),
