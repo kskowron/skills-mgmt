@@ -22,7 +22,10 @@
         "fightbulc/moment": "1.6.*",
         "schmunk42/yii2-giiant": "*",
         "warrence/yii2-kartikgii": "dev-master",
-        "kartik-v/yii2-mpdf": "dev-master"
+        "kartik-v/yii2-mpdf": "dev-master",
+        "codeception/codeception": "2.0.*",
+        "codeception/specify": "*",
+        "codeception/verify": "*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "*",
