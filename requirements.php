@@ -77,6 +77,13 @@ $requirements = array(
         'by' => 'All DB-related classes',
         'memo' => 'Required for PostgreSQL database.',
     ),
+    array(
+        'name' => 'cURL PHP extension',
+        'mandatory' => false,
+        'condition' => extension_loaded('curl'),
+        'by' => 'Authentication class',
+        'memo' => 'Required for authentication purposes.',
+    ),
     // Cache :
     array(
         'name' => 'Memcache extension',
