@@ -48,11 +48,11 @@ class SignupForm extends Model
             $user->email = $this->email;
             $user->setPassword($this->password);
             $user->generateAuthKey();
-            if ($user->save()) {
+            if ($user->checkPasswordPolicy($this->password) && $user->save()) {
                 return $user;
             }
         }
-
         return null;
     }
+
 }
