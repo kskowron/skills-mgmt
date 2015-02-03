@@ -10,24 +10,21 @@ use common\models\Employee;
 /**
  * EmployeeSearch represents the model behind the search form about `common\models\Employee`.
  */
-class EmployeeSearch extends Employee
-{
-    public function rules()
-    {
+class EmployeeSearch extends Employee {
+
+    public function rules() {
         return [
             [['id', 'user_id', 'location_id', 'created_at', 'updated_at'], 'integer'],
             [['firstName', 'lastName'], 'safe'],
         ];
     }
 
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
 
-    public function search($params)
-    {
+    public function search($params) {
         $query = Employee::find();
 
         $dataProvider = new ActiveDataProvider([
@@ -47,8 +44,22 @@ class EmployeeSearch extends Employee
         ]);
 
         $query->andFilterWhere(['like', 'firstName', $this->firstName])
-            ->andFilterWhere(['like', 'lastName', $this->lastName]);
+                ->andFilterWhere(['like', 'lastName', $this->lastName]);
 
         return $dataProvider;
     }
+
+    public function searchBySkills($skillSet) {
+        if (!is_array($skillSet) || count($skillSet) < 1 ) {
+            $skillSet = [-1];
+        }
+        $query = Employee::find()->distinct()
+                ->innerJoin(EmployeeSkill::tableName())
+                ->where(['or', 'years_of_experience>0', 'last_activity>0'])
+                ->andWhere(['in', 'skill_id', $skillSet]);
+        $dataProvider = new ActiveDataProvider(['query' => $query]);
+        
+        return $dataProvider;
+    }
+
 }
