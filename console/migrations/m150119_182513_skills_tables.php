@@ -30,7 +30,7 @@ class m150119_182513_skills_tables extends Migration
             $this->createTable('{{%employee}}',
                 [
                 'id' => Schema::TYPE_PK,
-                'user_id' => Schema::TYPE_INTEGER.' NULL DEFAULT NULL',
+                'user_id' => Schema::TYPE_INTEGER.' NOT NULL',
                 'location_id' => Schema::TYPE_INTEGER.' NOT NULL',
                 'firstName' => Schema::TYPE_STRING.'(60) NOT NULL',
                 'lastName' => Schema::TYPE_STRING.'(60) NOT NULL',

@@ -6,6 +6,9 @@ use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "employee".
+ *
+ * @property string $fullname Employee fullname, firstName lastNema
+ *                            or use getFullname(true) to reverse order
  */
 class Employee extends \common\models\base\Employee
 {
@@ -41,5 +44,13 @@ class Employee extends \common\models\base\Employee
             return NULL;
         }
         return $model->name;
+    }
+
+    public function getFullname($lastFirst = false)
+    {
+        if ($lastFirst) {
+            return $this->lastName.' '.$this->firstName;
+        }
+        return $this->firstName.' '.$this->lastName;
     }
 }
