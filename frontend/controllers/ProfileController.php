@@ -34,15 +34,16 @@ class ProfileController extends Controller
      */
     public function actionView()
     {
-        if (($model = Employee::findOne(\Yii::$app->user->id)) == NULL) {
+        if (($model = Employee::findOne(['user_id'=>\Yii::$app->user->id])) == NULL) {
             $model = new Employee();
         };
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            $model->user_id  = \Yii::$app->user->id;
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('view', ['model' => $model]);
+        if ($model->load(Yii::$app->request->post())){
+            $model->user_id = \Yii::$app->user->id;
+            if($model->save()){
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
         }
+        return $this->render('view', ['model' => $model]);
     }
 
     /**
@@ -57,8 +58,7 @@ class ProfileController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
-            return $this->render('create',
-                    [
+            return $this->render('create',              [
                     'model' => $model,
             ]);
         }
