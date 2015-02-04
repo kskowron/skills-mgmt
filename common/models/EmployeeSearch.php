@@ -50,15 +50,27 @@ class EmployeeSearch extends Employee {
     }
 
     public function searchBySkills($skillSet) {
-        if (!is_array($skillSet) || count($skillSet) < 1 ) {
+        if (!is_array($skillSet) || count($skillSet) < 1) {
             $skillSet = [-1];
         }
-        $query = Employee::find()->distinct()
-                ->innerJoin(EmployeeSkill::tableName())
-                ->where(['or', 'years_of_experience>0', 'last_activity>0'])
-                ->andWhere(['in', 'skill_id', $skillSet]);
-        $dataProvider = new ActiveDataProvider(['query' => $query]);
         
+        // Searching for id of employees meeting requirements
+        $q = new \yii\db\Query();
+        $q->select(['employee_id', 'no_of_skills' => 'count(*)'])
+                ->from(base\EmployeeSkill::tableName())
+                ->where(['in', 'skill_id', $skillSet])
+                ->andWhere(['or', 'years_of_experience>0', 'last_activity>0'])
+                ->groupBy('employee_id')
+                ->having(['no_of_skills' => count($skillSet)]);
+        $sq = new \yii\db\Query();
+        $sq->select('employee_id')->from(['es' => $q]);
+
+        // Fetching employees with selected previously ids
+        $query = Employee::find()->distinct()->where(['in', 'id', array_map(function($arr) {
+                        return (int) $arr['employee_id'];
+                    }, $sq->all())])->orderBy('lastName');
+        $dataProvider = new ActiveDataProvider(['query' => $query]);
+
         return $dataProvider;
     }
 

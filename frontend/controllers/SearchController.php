@@ -11,10 +11,10 @@ class SearchController extends \yii\web\Controller {
         $skillSearch = new SkillSearchExt();
         $categories = $skillSearch->allWithCategories();
 
+        // Getting skills list from GET parameter and fetching list of employees from DB
         $skillsList = \Yii::$app->request->getQueryParam('skills_list');
-
         $employeeSearch = new EmployeeSearch();
-        $employees = $employeeSearch->searchBySkills($skillsList);
+        $employees = $employeeSearch->searchBySkills($skillsList, 'employee_id');
 
         return $this->render('byskill', 
                              ['categories' => $categories, 
