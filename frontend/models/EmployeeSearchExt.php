@@ -10,7 +10,7 @@ use yii\db\Query;
 
 class EmployeeSearchExt extends EmployeeSearch {
     
-    public function searchBySkills($skillSet) {
+    public function searchBySkills($skillSet, $keyName, $skillLevel) {
         if (!is_array($skillSet) || count($skillSet) < 1) {
             $skillSet = [-1];
         }
@@ -20,7 +20,7 @@ class EmployeeSearchExt extends EmployeeSearch {
         $q->select(['employee_id', 'no_of_skills' => 'count(*)'])
                 ->from(EmployeeSkill::tableName())
                 ->where(['in', 'skill_id', $skillSet])
-                ->andWhere(['or', 'years_of_experience>0', 'last_activity>0'])
+                ->andWhere(['>=', 'skill_level_id', $skillLevel])
                 ->groupBy('employee_id')
                 ->having(['no_of_skills' => count($skillSet)]);
         $sq = new Query();

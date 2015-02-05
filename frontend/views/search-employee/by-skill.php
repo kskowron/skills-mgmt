@@ -22,7 +22,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
     $form = ActiveForm::begin(['method' => 'get', 'action' => ['search-employee/by-skill'], 'id' => $searchFormId]);
     echo '<label class="control-label">' . Html::encode($encouragement) . '</label>';
-    echo Html::hiddenInput('skillLevel', NULL, ['id' => 'skillLevel']);
 
     echo Select2::widget([
         'name' => 'skills_list',
@@ -32,11 +31,11 @@ $this->params['breadcrumbs'][] = $this->title;
         'addon' => [
             'append' => [
                 'content' => \yii\bootstrap\ButtonDropdown::widget([
-                    'label' => Yii::t('skill', 'Choose skill level and search'),
+                    'label' => Yii::t('skill', 'Choose lowest skill level and search'),
                     'encodeLabel' => false,
                     'dropdown' => [
                         'items' => array_map(function($value) {
-                                    return Html::submitButton($value['name'], ['name' => 'skillLevel', 'value' => $value['id'], 'class' => 'btn btn-default dropdown-toggle']);
+                                    return '<li>' . Html::submitButton($value['name'], ['name' => 'skill_level', 'value' => $value['id'], 'class' => 'btn btn-default btn-block dropdown-toggle']) . '</li>';
                                 }, $skillLevels),
                             ],
                             'options' => ['class' => 'btn-default']
@@ -49,8 +48,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     'multiple' => true
                 ],
             ]);
-
-            echo Html::submitButton('Login', ['class' => 'btn btn-primary']);
 
             $form->end();
             ?>
@@ -65,6 +62,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
                     ['label' => Yii::t('skill', 'Employee'),
+                       'attribute'  => 'lastName',
                         'format' => 'raw',
                         'value' => function($data) {
                             return Html::a(Html::encode($data->firstName . ' ' . $data->lastName), Yii::$app->urlManager->createUrl(['search-employee/show-employer', 'id' => $data->id]), ['title' => Yii::t('app', 'See details')]);

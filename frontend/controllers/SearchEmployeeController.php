@@ -13,13 +13,12 @@ class SearchEmployeeController extends Controller {
     public function actionBySkill() {
         $skillSearch = new SkillSearchExt();
         $categories = $skillSearch->allWithCategories();
-        
-        print_r(Yii::$app->request->getQueryParams());
 
         // Getting skills list from GET parameter and fetching list of employees from DB
         $skillsList = Yii::$app->request->getQueryParam('skills_list');
+        $skillLevel = (int) Yii::$app->request->getQueryParam('skill_level');
         $employeeSearch = new EmployeeSearchExt();
-        $employees = $employeeSearch->searchBySkills($skillsList, 'employee_id');
+        $employees = $employeeSearch->searchBySkills($skillsList, 'employee_id', $skillLevel);
         
         print_r(SkillLevel::find()->asArray()->all());
 
