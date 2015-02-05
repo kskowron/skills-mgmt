@@ -28,7 +28,8 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= kartik\helpers\Html::button(Yii::t('skills', 'My Skills'), ['class' => 'btn btn-primary btn-block']) ?>
         </div>
         <div class="col-lg-2">
-            <?= kartik\helpers\Html::button(Yii::t('skills', 'My Skills'), ['class' => 'btn btn-primary btn-block']) ?>
+            <?= kartik\helpers\Html::a(Yii::t('skills', 'My Profile'),['my-profile/view'],
+                ['class' => 'btn btn-primary btn-block']) ?>
         </div>
     </div>
     <div class="body-content">
