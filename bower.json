@@ -1,26 +1,26 @@
 {
-  "name": "skill-mgmt",
-  "version": "0.0.0",
-  "moduleType": [
-    "amd"
-  ],
-  "license": "MIT",
-  "ignore": [
-    "**/.*",
-    "node_modules",
-    "bower_components",
-    "vendor/bower",
-    "test",
-    "tests"
-  ],
-  "dependencies": {
-    "bootbox": "~4.3.0",
-    "fullcalendar": "~2.1.1",
-    "ionsound": "~2.0.2",
-    "qtip2": "~2.2.1"
-  },
-  "homepage": "https://github.com/jarekkozak/skills-mgmt",
-  "authors": [
-    "Jaroslaw Kozak <jaroslaw.kozak68@gmail.com>"
-  ]
+    "name": "skill-mgmt",
+    "version": "0.0.0",
+    "moduleType": [
+        "amd"
+    ],
+    "license": "MIT",
+    "ignore": [
+        "**/.*",
+        "node_modules",
+        "bower_components",
+        "vendor/bower",
+        "test",
+        "tests"
+    ],
+    "dependencies": {
+        "bootbox": "~4.3.0",
+        "fullcalendar": "~2.1.1",
+        "ionsound": "~2.0.2",
+        "qtip2": "~2.2.1"
+    },
+    "homepage": "https://github.com/jarekkozak/skills-mgmt",
+    "authors": [
+        "Jaroslaw Kozak <jaroslaw.kozak68@gmail.com>"
+    ]
 }
