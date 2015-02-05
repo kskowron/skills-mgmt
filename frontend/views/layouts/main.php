@@ -5,7 +5,7 @@ use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use frontend\assets\AppAsset;
-use frontend\widgets\Alert;
+use jk\widgets\Alert;
 
 /* @var $this \yii\web\View */
 /* @var $content string */
@@ -54,7 +54,7 @@ AppAsset::register($this);
             } else {
                 $menuItems = [];
                 $menuItems[] = [
-                    'label' => 'Profile', 'url' => ['/profile/view']
+                    'label' => 'Profile', 'url' => ['/my-profile/view']
                 ];
                 $menuItems[] = [
                     'label' => 'Logout ('.Yii::$app->user->identity->username.')',
@@ -87,7 +87,7 @@ AppAsset::register($this);
                 <p class="pull-right"><?= Yii::powered() ?></p>
             </div>
         </footer>
-
+<?= "A" // \jk\widgets\Confirm::widget() ?>
 <?php $this->endBody() ?>
     </body>
 </html>

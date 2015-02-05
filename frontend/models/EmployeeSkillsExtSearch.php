@@ -77,7 +77,7 @@ class EmployeeSkillsExtSearch extends EmployeeSkillSearch
                 $query->andWhere(['employee_id' => $this->employee_ids]);
             } else {
                 $query->andWhere('employee_id = :emp_id',
-                    ['emp_id' => $this->employee_ids]);
+                    [':emp_id' => $this->employee_ids]);
             }
         }
 
@@ -100,6 +100,14 @@ class EmployeeSkillsExtSearch extends EmployeeSkillSearch
                 'level_name' => [
                     'asc' => ['c.name' => SORT_ASC, 'b.name' => SORT_ASC, 'a.name' => SORT_ASC],
                     'desc' => ['c.name' => SORT_DESC, 'b.name' => SORT_DESC, 'a.name' => SORT_ASC],
+                ],
+                'last_activity' => [
+                    'asc' => ['last_activity' => SORT_ASC, 'b.name' => SORT_ASC, 'a.name' => SORT_ASC],
+                    'desc' => ['last_activity' => SORT_DESC, 'b.name' => SORT_ASC, 'a.name' => SORT_ASC],
+                ],
+                'years_of_experience' => [
+                    'asc' => ['years_of_experience' => SORT_ASC, 'b.name' => SORT_ASC, 'a.name' => SORT_ASC],
+                    'desc' => ['years_of_experience' => SORT_DESC, 'b.name' => SORT_ASC, 'a.name' => SORT_ASC],
                 ]
             ]
         ]);
@@ -111,6 +119,8 @@ class EmployeeSkillsExtSearch extends EmployeeSkillSearch
         $query->andFilterWhere(['like', 'a.name', $this->skill_name]);
         $query->andFilterWhere(['like', 'b.name', $this->category_name]);
         $query->andFilterWhere(['like', 'c.name', $this->level_name]);
+        $query->andFilterWhere(['like', 'years_of_experience', $this->years_of_experience]);
+        $query->andFilterWhere(['like', 'last_activity', $this->last_activity]);
 
         return $dataProvider;
     }

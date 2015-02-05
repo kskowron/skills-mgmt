@@ -12,7 +12,7 @@ use yii\filters\VerbFilter;
 /**
  * ProfileController implements the CRUD actions for Employee model.
  */
-class ProfileController extends Controller
+class MyProfileController extends Controller
 {
 
     public function behaviors()
