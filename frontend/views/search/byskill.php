@@ -25,6 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'name' => 'skills_list',
         'data' => $categories,
         'value' => $skillsList,
+        'size' => Select2::MEDIUM,
         'addon' => ['append' => [
                 'content' => Html::submitButton(Html::icon('search'), [
                     'class' => 'btn btn-primary',
@@ -51,35 +52,26 @@ $this->params['breadcrumbs'][] = $this->title;
         //'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-            'firstName',
-            'lastName',
-            [
-                'class' => 'yii\grid\ActionColumn',
-                'template'=>'{view}',
-                'buttons' => [
-                'view' => function ($url, $model) {
-                    return Html::a(Html::icon('eye-open'),
-                            Yii::$app->urlManager->createUrl(['search/show-employer','id' => $model->id]),
-                            [ 'title' => Yii::t('yii', 'See details'),
-                             'data-method' => 'get',
-
-                    ]);}
-
+            ['label' => Yii::t('skill', 'Employee'),
+                'format' => 'raw',
+                'value' => function($data) {
+                    return Html::a(Html::encode($data->firstName . ' ' . $data->lastName), 
+                            Yii::$app->urlManager->createUrl(['search/show-employer', 'id' => $data->id]),
+                            ['title' => Yii::t('app', 'See details')]);
+                }],
+                ],
+                'showOnEmpty' => false,
+                'responsive' => true,
+                'hover' => true,
+                'condensed' => true,
+                'floatHeader' => true,
+                'panel' => [
+                    'heading' => '<h3 class="panel-title"><i class="glyphicon glyphicon-th-list"></i> ' . Html::encode(Yii::t('skills', 'Search results')) . ' </h3>',
+                    'type' => 'info',
+                    'before' => Html::a('<i class="glyphicon glyphicon-repeat"></i> Reset List', ['search/by-skill'], ['class' => 'btn btn-info']),
+                    'showFooter' => false
                 ]
-            ]
-        ],
-        'showOnEmpty' => false,
-        'responsive' => true,
-        'hover' => true,
-        'condensed' => true,
-        'floatHeader' => true,
-        'panel' => [
-            'heading' => '<h3 class="panel-title"><i class="glyphicon glyphicon-th-list"></i> ' . Html::encode(Yii::t('skills', 'Search results')) . ' </h3>',
-            'type' => 'info',
-            'before' => Html::a('<i class="glyphicon glyphicon-repeat"></i> Reset List', ['search/by-skill'], ['class' => 'btn btn-info']),
-            'showFooter' => false
-        ]
-]);
-Pjax::end();
-?>
+            ]);
+            Pjax::end();
+            ?>
 </div>
