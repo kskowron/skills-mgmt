@@ -19,7 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php
     $encouragement = Yii::t('skills', 'Choose skills');
 
-    $form = ActiveForm::begin(['method' => 'get', 'action' => ['search/by-skill']]);
+    $form = ActiveForm::begin(['method' => 'get', 'action' => ['search-employee/by-skill']]);
     echo '<label class="control-label">' . Html::encode($encouragement) . '</label>';
     echo Select2::widget([
         'name' => 'skills_list',
@@ -56,7 +56,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'format' => 'raw',
                 'value' => function($data) {
                     return Html::a(Html::encode($data->firstName . ' ' . $data->lastName), 
-                            Yii::$app->urlManager->createUrl(['search/show-employer', 'id' => $data->id]),
+                            Yii::$app->urlManager->createUrl(['search-employee/show-employer', 'id' => $data->id]),
                             ['title' => Yii::t('app', 'See details')]);
                 }],
                 ],
@@ -68,7 +68,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'panel' => [
                     'heading' => '<h3 class="panel-title"><i class="glyphicon glyphicon-th-list"></i> ' . Html::encode(Yii::t('skills', 'Search results')) . ' </h3>',
                     'type' => 'info',
-                    'before' => Html::a('<i class="glyphicon glyphicon-repeat"></i> Reset List', ['search/by-skill'], ['class' => 'btn btn-info']),
+                    'before' => Html::a('<i class="glyphicon glyphicon-repeat"></i> Reset List', ['search-employee/by-skill'], ['class' => 'btn btn-info']),
                     'showFooter' => false
                 ]
             ]);
