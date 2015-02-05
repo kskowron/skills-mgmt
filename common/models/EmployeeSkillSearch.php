@@ -12,10 +12,13 @@ use common\models\EmployeeSkill;
  */
 class EmployeeSkillSearch extends EmployeeSkill
 {
+
     public function rules()
     {
         return [
-            [['id', 'skill_id', 'skill_level_id', 'employee_id', 'created_at', 'updated_at'], 'integer'],
+            [['id', 'skill_id', 'skill_level_id', 'employee_id', 'last_activity',],
+                'integer'],
+            [['years_of_experience'], 'number'],
         ];
     }
 
