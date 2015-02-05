@@ -26,7 +26,9 @@
         "codeception/codeception": "2.0.*",
         "codeception/specify": "*",
         "codeception/verify": "*",
-        "kartik-v/yii2-widget-select2": "*"
+        "kartik-v/yii2-widget-select2": "*",
+        "kartik-v/yii2-grid": "dev-master",
+        "kartik-v/yii2-editable": "*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "*",
@@ -41,5 +43,13 @@
             "npm-asset-library": "vendor/npm",
             "bower-asset-library": "vendor/bower"
         }
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "bower install"
+        ],
+        "post-update-cmd": [
+            "bower install"
+        ]
     }
 }

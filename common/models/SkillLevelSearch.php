@@ -15,7 +15,7 @@ class SkillLevelSearch extends SkillLevel
     public function rules()
     {
         return [
-            [['id', 'created_at', 'updated_at'], 'integer'],
+            [['id'], 'integer'],
             [['name'], 'safe'],
         ];
     }
@@ -40,12 +40,21 @@ class SkillLevelSearch extends SkillLevel
 
         $query->andFilterWhere([
             'id' => $this->id,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name]);
 
         return $dataProvider;
+    }
+
+    /**
+     * Returns array of available skill levels
+     *
+     * @return \yii\db\Query
+     */
+    public function getLevelList(){
+        $query = new \yii\db\Query();
+        $query->select(['id','name'])->from(self::tableName())->orderBy('id');
+        return $query;
     }
 }
