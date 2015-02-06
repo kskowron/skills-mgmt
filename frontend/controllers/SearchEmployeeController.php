@@ -6,9 +6,29 @@ use common\models\SkillLevel;
 use frontend\models\EmployeeSearchExt;
 use frontend\models\SkillSearchExt;
 use Yii;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 
 class SearchEmployeeController extends Controller {
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['by-skill'],
+                'rules' => [
+                    [
+                        'actions' => ['by-skill'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
+        ];
+    }
 
     public function actionBySkill() {
         $skillSearch = new SkillSearchExt();
@@ -19,8 +39,6 @@ class SearchEmployeeController extends Controller {
         $skillLevel = (int) Yii::$app->request->getQueryParam('skill_level');
         $employeeSearch = new EmployeeSearchExt();
         $employees = $employeeSearch->searchBySkills($skillsList, 'employee_id', $skillLevel);
-        
-        print_r(SkillLevel::find()->asArray()->all());
 
         return $this->render('by-skill', 
                              ['categories' => $categories, 
