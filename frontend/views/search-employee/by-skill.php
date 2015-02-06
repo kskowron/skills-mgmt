@@ -8,7 +8,7 @@ use yii\widgets\Pjax;
 
 /* @var $this View */
 
-$this->title                   = Yii::t('skills', 'Search employees by skills');
+$this->title = Yii::t('skills', 'Search employees by skills');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="employee-search-skill">
@@ -18,8 +18,8 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
 
     <?php
-    $encouragement                 = Yii::t('skills', 'Choose skills');
-    $searchFormId                  = 'searchForm0';
+    $encouragement = Yii::t('skills', 'Choose skills');
+    $searchFormId = 'searchForm0';
 
     $form = ActiveForm::begin(['method' => 'get', 'action' => ['search-employee/by-skill'],
             'id' => $searchFormId]);
