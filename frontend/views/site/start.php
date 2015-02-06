@@ -16,7 +16,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 ['class' => 'btn btn-primary btn-block']) ?>
         </div>
         <div class="col-lg-2">
-            <?= kartik\helpers\Html::button(Yii::t('skills', 'My Skills'), ['class' => 'btn btn-primary btn-block']) ?>
+            <?= kartik\helpers\Html::a(Yii::t('skills', 'Search by Skills'),['search-employee/by-skill'],
+                ['class' => 'btn btn-primary btn-block']) ?>
         </div>
         <div class="col-lg-2">
             <?= kartik\helpers\Html::button(Yii::t('skills', 'My Skills'), ['class' => 'btn btn-primary btn-block']) ?>
