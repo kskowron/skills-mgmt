@@ -126,8 +126,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'heading' => '<h3 class="panel-title"><i class="glyphicon glyphicon-th-list"></i> '.Html::encode($this->title).' </h3>',
             'type' => 'info',
             'before' => Html::a(Html::icon('repeat').' '.\Yii::t('skills','Reset List'),
-                ['list'], [
-                    'class' => 'btn btn-info'])
+                ['list'], ['class' => 'btn btn-info'])
             . Html::a(Html::icon('find').' '.\Yii::t('skills','Unassigned skills'),
                 ['gap-list'], ['class' => 'btn btn-info pull-right','data-pjax'=>0]),
             'after' => Html::a(Html::icon('repeat').' '.\Yii::t('skills','Reset List'),
