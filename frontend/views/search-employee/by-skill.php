@@ -71,7 +71,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'format' => 'raw',
                     'value' => function($data) {
                         return Html::a(Html::encode($data->firstName.' '.$data->lastName),
-                                Yii::$app->urlManager->createUrl(['search-employee/show-employer',
+                                Yii::$app->urlManager->createUrl(['profile/view',
                                     'id' => $data->id]),
                                 ['title' => Yii::t('app', 'See details')]);
                     }],

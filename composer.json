@@ -28,7 +28,8 @@
         "codeception/verify": "*",
         "kartik-v/yii2-widget-select2": "*",
         "kartik-v/yii2-grid": "dev-master",
-        "kartik-v/yii2-editable": "*"
+        "kartik-v/yii2-editable": "*",
+        "kartik-v/yii2-detail-view": "*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "*",

@@ -56,12 +56,8 @@ class EmployeeSkillsExtSearch extends EmployeeSkillSearch
     public function search($params)
     {
 
-        if (($employee = Employee::findOne(['user_id' => Yii::$app->user->id])) !== NULL) {
-            $this->employee_ids = $employee->id;
-        }
-
         /* @var $query Query */
-        $query = MySkillsSearch::find();
+        $query = self::find();
         //Join Skills table
         $query->leftJoin(['a' => Skill::tableName()], 'skill_id = a.id');
         //Join category name
