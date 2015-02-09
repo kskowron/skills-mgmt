@@ -28,6 +28,7 @@ class MySkillsSearch extends EmployeeSkillsExtSearch
      */
     public function search($params)
     {
+        $this->employee_ids = $this->loggedEmployee->id;
         return parent::search($params);
     }
 

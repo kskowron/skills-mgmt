@@ -1,4 +1,5 @@
 <?php
+
 use kartik\form\ActiveForm;
 use kartik\grid\GridView;
 use kartik\helpers\Html;
@@ -22,8 +23,8 @@ $this->params['breadcrumbs'][] = $this->title;
     $searchFormId = 'searchForm0';
 
     $form = ActiveForm::begin(['method' => 'get', 'action' => ['search-employee/by-skill'],
-            'id' => $searchFormId]);
-    echo '<label class="control-label">'.Html::encode($encouragement).'</label>';
+                'id' => $searchFormId]);
+    echo '<label class="control-label">' . Html::encode($encouragement) . '</label>';
 
     echo Select2::widget([
         'name' => 'skills_list',
@@ -33,64 +34,79 @@ $this->params['breadcrumbs'][] = $this->title;
         'addon' => [
             'append' => [
                 'content' => \yii\bootstrap\ButtonDropdown::widget([
-                    'label' => Yii::t('skill',
-                        'Choose lowest skill level and search'),
+                    'label' => Yii::t('skill', 'Choose lowest skill level and search'),
                     'encodeLabel' => false,
                     'dropdown' => [
                         'items' => array_map(function($value) {
-                                return '<li>'.Html::submitButton($value['name'],
-                                        ['name' => 'skill_level', 'value' => $value['id'],
-                                        'class' => 'btn btn-default btn-block dropdown-toggle']).'</li>';
-                            }, $skillLevels),
-                        ],
-                        'options' => ['class' => 'btn-default']
-                    ]),
-                    'asButton' => true
-                ]
-            ],
-            'options' => [
-                'placeholder' => Html::encode($encouragement),
-                'multiple' => true
-            ],
-        ]);
-
-        $form->end();
-        ?>
-    </div>
-
-    <div>
-        <?php
-        Pjax::begin();
-        echo GridView::widget([
-            'dataProvider' => $employeeDataProvider,
-            //'filterModel' => $searchModel,
-            'columns' => [
-                ['class' => 'yii\grid\SerialColumn'],
-                ['label' => Yii::t('skill', 'Employee'),
-                    'attribute' => 'lastName',
-                    'format' => 'raw',
-                    'value' => function($data) {
-                        return Html::a(Html::encode($data->firstName.' '.$data->lastName),
-                                Yii::$app->urlManager->createUrl(['search-employee/show-employer',
-                                    'id' => $data->id]),
-                                ['title' => Yii::t('app', 'See details')]);
-                    }],
+                                    return '<li>' . Html::submitButton($value['name'], ['name' => 'skill_level', 'value' => $value['id'],
+                                                'class' => 'btn btn-default btn-block dropdown-toggle']) . '</li>';
+                                }, $skillLevels),
+                            ],
+                            'options' => ['class' => 'btn-default']
+                        ]),
+                        'asButton' => true
+                    ]
                 ],
-                'showOnEmpty' => false,
-                'responsive' => true,
-                'hover' => true,
-                'condensed' => true,
-                'floatHeader' => true,
-                'panel' => [
-                    'heading' => '<h3 class="panel-title"><i class="glyphicon glyphicon-th-list"></i> '.Html::encode(Yii::t('skills',
-                            'Search results')).' </h3>',
-                    'type' => 'info',
-                    'before' => Html::a('<i class="glyphicon glyphicon-repeat"></i> Reset List',
-                        ['search-employee/by-skill'],
-                        ['class' => 'btn btn-info']),
-                    'showFooter' => false
-                ]
+                'options' => [
+                    'placeholder' => Html::encode($encouragement),
+                    'multiple' => true
+                ],
             ]);
-            Pjax::end();
+
+            $form->end();
             ?>
+        </div>
+
+        <div>
+            <?php
+            //echo $this->render('_employee-list', ['dataProvider' => $dataProvider, 'searchModel' => $searchModel]);
+
+            Pjax::begin();
+            echo GridView::widget([
+                'dataProvider' => $dataProvider,
+                //'filterModel' => $searchModel,
+                'columns' => [
+                    ['class' => 'yii\grid\SerialColumn'],
+                    [
+                        'attribute' => 'lastName',
+                        'format' => 'raw',
+                        'value' => function($data) {
+                            return Html::a(Html::encode($data->lastName), Yii::$app->urlManager->createUrl(['profile/view',
+                                                'id' => $data->id]), ['title' => Yii::t('app', 'See details')]);
+                        }],
+                            [
+                                'attribute' => 'firstName',
+                                'format' => 'raw',
+                                'value' => function($data) {
+                                    return Html::a(Html::encode($data->firstName), Yii::$app->urlManager->createUrl(['profile/view',
+                                                        'id' => $data->id]), ['title' => Yii::t('app', 'See details')]);
+                                }],
+                                    [
+                                        'label' => 'Business profile',
+                                        'format' => 'raw',
+                                        'value' => function($data) {
+                                            $businessProfiles = array();
+                                            /* @var $value EmployeeBusinessProfile */
+                                            foreach ($data->getEmployeeBusinessProfiles()->orderBy('profile_order')->all() as $key => $value) {
+                                                array_push($businessProfiles, Html::a($value->businessProfile->name, Yii::$app->urlManager->createUrl(['profile/view',
+                                                                    'id' => $data->id])));
+                                            }
+                                            return implode(', ', $businessProfiles);
+                                        }
+                                            ]
+                                        ],
+                                        'showOnEmpty' => false,
+                                        'responsive' => true,
+                                        'hover' => true,
+                                        'condensed' => true,
+                                        'floatHeader' => true,
+                                        'panel' => [
+                                            'heading' => '<h3 class="panel-title"><i class="glyphicon glyphicon-th-list"></i> ' . Html::encode(Yii::t('skills', 'Search results')) . ' </h3>',
+                                            'type' => 'info',
+                                            'before' => Html::a('<i class="glyphicon glyphicon-repeat"></i> Reset List', ['search-employee/by-skill'], ['class' => 'btn btn-info']),
+                                            'showFooter' => true
+                                        ]
+                                    ]);
+                                    Pjax::end();
+                                    ?>
 </div>
