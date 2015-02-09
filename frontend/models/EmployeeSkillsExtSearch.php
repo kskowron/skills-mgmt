@@ -169,4 +169,17 @@ class EmployeeSkillsExtSearch extends EmployeeSkillSearch
     {
         $this->employee_ids = $employee_ids;
     }
+    
+    public function searchEmployeeSkills($params) {
+        $this->employee_ids = $params['id'];
+        /* var $dataProvider ActiveDataProvider */
+        $dataProvider = $this->search($params);
+        // Narrow search results to skills with specified years of experience, last activity year or skill level
+        $dataProvider->query->andWhere('skill_level_id > 1 or last_activity > 0 or years_of_experience > 0');
+        // If no sort order provided by a user sort data by category name and skill name
+        if (ArrayHelper::getValue($params, 'sort', NULL) == NULL) {
+            $dataProvider->query->orderBy('b.name asc, a.name asc');
+        }
+        return $dataProvider;
+    }
 }

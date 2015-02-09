@@ -2,7 +2,6 @@
 /* @var $this yii\web\View */
 $this->title = Yii::t('skills', 'My home page');
 $this->params['breadcrumbs'][] = $this->title;
-
 ?>
 <div class="site-index">
 
@@ -11,30 +10,35 @@ $this->params['breadcrumbs'][] = $this->title;
         <p class="lead">You have successfully logged-in to Skills management application.</p>
     </div>
     <div class="functions-content">
-        <div class="col-lg-2">
-            <?= kartik\helpers\Html::a(Yii::t('skills', 'My Skills'),['myskills/list'],
-                ['class' => 'btn btn-primary btn-block']) ?>
-        </div>
-        <div class="col-lg-2">
-            <?= kartik\helpers\Html::a(Yii::t('skills', 'Search by Skills'),['search-employee/by-skill'],
-                ['class' => 'btn btn-primary btn-block']) ?>
-        </div>
-        <div class="col-lg-2">
+        <div class="row">
+            <div class="col-lg-4">
+                <?= kartik\helpers\Html::a(Yii::t('skills', 'My Skills'), ['myskills/list'], ['class' => 'btn btn-primary btn-block'])
+                ?>
+            </div>
+            <div class="col-lg-4">
+                <?= kartik\helpers\Html::a(Yii::t('skills', 'Browse employees'), ['search-employee/all-employees'], ['class' => 'btn btn-primary btn-block'])
+                ?>
+            </div>
+            <div class="col-lg-4">
+                <?= kartik\helpers\Html::a(Yii::t('skills', 'Search employees by skills'), ['search-employee/by-skill'], ['class' => 'btn btn-primary btn-block'])
+                ?>
+            </div>
+            <!--
+            <div class="col-lg-2">
             <?= kartik\helpers\Html::button(Yii::t('skills', 'My Skills'), ['class' => 'btn btn-primary btn-block']) ?>
-        </div>
-        <div class="col-lg-2">
+            </div>
+            <div class="col-lg-2">
             <?= kartik\helpers\Html::button(Yii::t('skills', 'My Skills'), ['class' => 'btn btn-primary btn-block']) ?>
-        </div>
-        <div class="col-lg-2">
-            <?= kartik\helpers\Html::button(Yii::t('skills', 'My Skills'), ['class' => 'btn btn-primary btn-block']) ?>
-        </div>
-        <div class="col-lg-2">
-            <?= kartik\helpers\Html::a(Yii::t('skills', 'My Profile'),['my-profile/view'],
-                ['class' => 'btn btn-primary btn-block']) ?>
+            </div>
+            <div class="col-lg-2">
+            <?= kartik\helpers\Html::a(Yii::t('skills', 'My Profile'), ['my-profile/view'], ['class' => 'btn btn-primary btn-block'])
+            ?>
+            </div>
+            -->
         </div>
     </div>
     <div class="body-content">
-
+        <!--
         <div class="row">
             <div class="col-lg-4">
                 <h2>Heading</h2>
@@ -67,6 +71,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <p><a class="btn btn-default" href="http://www.yiiframework.com/extensions/">Yii Extensions &raquo;</a></p>
             </div>
         </div>
+        -->
 
     </div>
 </div>
