@@ -7,14 +7,15 @@ use frontend\models\EmployeeSearchExt;
 use frontend\models\SkillSearchExt;
 use Yii;
 use yii\filters\AccessControl;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 
 class SearchEmployeeController extends Controller {
+
     /**
      * @inheritdoc
      */
-    public function behaviors()
-    {
+    public function behaviors() {
         return [
             'access' => [
                 'class' => AccessControl::className(),
@@ -34,21 +35,28 @@ class SearchEmployeeController extends Controller {
         $skillSearch = new SkillSearchExt();
         $categories = $skillSearch->allWithCategories();
 
-        // Getting skills list from GET parameter and fetching list of employees from DB
-        $skillsList = Yii::$app->request->getQueryParam('skills_list');
-        $skillLevel = (int) Yii::$app->request->getQueryParam('skill_level');
+        $params = Yii::$app->request->getQueryParams();
+        
         $employeeSearch = new EmployeeSearchExt();
-        $employees = $employeeSearch->searchBySkills($skillsList, 'employee_id', $skillLevel);
+        $employees = $employeeSearch->searchBySkills($params);
 
-        return $this->render('by-skill', 
-                             ['categories' => $categories, 
-                              'skillsList' => $skillsList,
-                              'employeeDataProvider'  => $employees,
-                              'skillLevels' => SkillLevel::find()->asArray()->all()]);
+        return $this->render('by-skill', ['categories' => $categories,
+                    'skillsList' => ArrayHelper::getValue($params, 'skills_list', []),
+                    'searchModel' => $employeeSearch,
+                    'dataProvider' => $employees,
+                    'skillLevels' => SkillLevel::find()->asArray()->all()]);
     }
 
     public function actionIndex() {
         return $this->render('index');
+    }
+
+    public function actionAllEmployees() {
+        $searchModel = new EmployeeSearchExt();
+        $dataProvider = $searchModel->searchAll(Yii::$app->request->getQueryParams());
+
+        return $this->render('all-employees', ['searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider]);
     }
 
 }

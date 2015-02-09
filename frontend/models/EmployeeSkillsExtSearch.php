@@ -56,12 +56,8 @@ class EmployeeSkillsExtSearch extends EmployeeSkillSearch
     public function search($params)
     {
 
-        if (($employee = Employee::findOne(['user_id' => Yii::$app->user->id])) !== NULL) {
-            $this->employee_ids = $employee->id;
-        }
-
         /* @var $query Query */
-        $query = MySkillsSearch::find();
+        $query = self::find();
         //Join Skills table
         $query->leftJoin(['a' => Skill::tableName()], 'skill_id = a.id');
         //Join category name
@@ -172,5 +168,18 @@ class EmployeeSkillsExtSearch extends EmployeeSkillSearch
     function setEmployee_ids($employee_ids)
     {
         $this->employee_ids = $employee_ids;
+    }
+    
+    public function searchEmployeeSkills($params) {
+        $this->employee_ids = $params['id'];
+        /* var $dataProvider ActiveDataProvider */
+        $dataProvider = $this->search($params);
+        // Narrow search results to skills with specified years of experience, last activity year or skill level
+        $dataProvider->query->andWhere('skill_level_id > 1 or last_activity > 0 or years_of_experience > 0');
+        // If no sort order provided by a user sort data by category name and skill name
+        if (ArrayHelper::getValue($params, 'sort', NULL) == NULL) {
+            $dataProvider->query->orderBy('b.name asc, a.name asc');
+        }
+        return $dataProvider;
     }
 }
