@@ -82,7 +82,9 @@ if ($employee->employeeBusinessProfiles !== NULL) {
                 Html::encode(Yii::t('skills', 'Skills and competences list')) . ' </h3>',
                 'type' => 'info',
                 'before' => Html::a(Html::icon('repeat') . ' ' .
-                        Yii::t('skills', 'Reset List'), ['profile/view', 'id' => $employee->id], ['class' => 'btn btn-info']),
+                        Yii::t('skills', 'Reset List'), ['profile/view', 'id' => $employee->id], ['class' => 'btn btn-info']) . 
+                        ($profileBackUrl !== NULL ? ' ' . Html::a(Html::icon('arrow-left') . ' ' .
+                        Yii::t('skills', 'Back to search results'), $profileBackUrl, ['class' => 'btn btn-info']) : ''),
                 'after' => Html::a(Html::icon('repeat') . ' ' .
                         Yii::t('skills', 'Reset List'), ['profile/view', 'id' => $employee->id], ['class' => 'btn btn-info']),
                 'showFooter' => false
