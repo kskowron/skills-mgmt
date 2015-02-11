@@ -18,6 +18,7 @@ use Yii;
  * @property \common\models\Location $location
  * @property \common\models\User $user
  * @property \common\models\EmployeeBusinessProfile[] $employeeBusinessProfiles
+ * @property \common\models\EmployeeRole[] $employeeRoles
  * @property \common\models\EmployeeSkill[] $employeeSkills
  */
 class Employee extends \yii\db\ActiveRecord
@@ -36,8 +37,8 @@ class Employee extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['user_id', 'location_id', 'firstName', 'lastName', 'created_at', 'updated_at'], 'required'],
             [['user_id', 'location_id', 'created_at', 'updated_at'], 'integer'],
-            [['location_id', 'firstName', 'lastName', 'created_at', 'updated_at'], 'required'],
             [['firstName', 'lastName'], 'string', 'max' => 60]
         ];
     }
@@ -80,6 +81,14 @@ class Employee extends \yii\db\ActiveRecord
     public function getEmployeeBusinessProfiles()
     {
         return $this->hasMany(\common\models\EmployeeBusinessProfile::className(), ['employee_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getEmployeeRoles()
+    {
+        return $this->hasMany(\common\models\EmployeeRole::className(), ['employee_id' => 'id']);
     }
 
     /**

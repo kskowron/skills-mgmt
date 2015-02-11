@@ -9,8 +9,9 @@ use yii\helpers\Html;
  *
  */
 $this->title = Yii::t('skills', 'Update {modelClass} - {skill}',
-        ['modelClass' => 'Employee Skill','skill'=>$skill->name]);
+    ['modelClass' => 'Employee Skill','skill'=>$skill->name]);
 
+$this->params['breadcrumbs'][] = ['label' => Yii::t('skills', 'My Profile'),'url' => ['my-profile/view']];
 $this->params['breadcrumbs'][] = ['label' => Yii::t('skills', 'My skills'),'url' => ['list']];
 
 $this->params['breadcrumbs'][] = $this->title;

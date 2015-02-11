@@ -53,4 +53,14 @@ class Employee extends \common\models\base\Employee
         }
         return $this->firstName.' '.$this->lastName;
     }
+
+    public function isAdministrator()
+    {
+        foreach ($this->employeeRoles as $key => $value) {
+            if($value->role == EmployeeRole::ADMINISTRATOR){
+                return TRUE;
+            }
+        }
+        return FALSE;
+    }
 }

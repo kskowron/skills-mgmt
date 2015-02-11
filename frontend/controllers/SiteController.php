@@ -184,4 +184,16 @@ class SiteController extends Controller
                 'model' => $model,
         ]);
     }
+
+    public function goBack($defaultUrl = null)
+    {
+        $employee = \common\models\Employee::findOne(['user_id'=>\Yii::$app->user->id]);
+        if($employee && $employee->isAdministrator()){
+            $defaultUrl = \yii\helpers\Url::to(['search-employee/by-skill'],true);
+        }else{
+            $defaultUrl = \yii\helpers\Url::to(['my-profile/view'],true);
+        }
+        return parent::goBack($defaultUrl);
+    }
+
 }

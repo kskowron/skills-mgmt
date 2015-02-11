@@ -1,38 +1,27 @@
 <?php
 
-namespace frontend\controllers;
+namespace backend\controllers\crud;
 
-use common\models\Employee;
+use common\models\EmployeeRole;
+use common\models\EmployeeRoleSearch;
 use Yii;
-use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
 /**
- * ProfileController implements the CRUD actions for Employee model.
+ * EmployeeRoleController implements the CRUD actions for EmployeeRole model.
  */
-class MyProfileController extends Controller
+class EmployeeRoleController extends Controller
 {
-
-
     /**
-     * @inheritdoc
+     * Action traits
      */
+    use \common\lib\traits\action\TactionEmployeeList;
+    
     public function behaviors()
     {
         return [
-            'access' => [
-                'class' => AccessControl::className(),
-                'only' => ['create','update','delete','view'],
-                'rules' => [
-                    [
-                        'actions' => ['create','update','delete','view'],
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
-                ],
-            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -43,44 +32,56 @@ class MyProfileController extends Controller
     }
 
     /**
-     * Displays a single Employee model.
-     * @param integer $id
+     * Lists all EmployeeRole models.
      * @return mixed
      */
-    public function actionView()
+    public function actionIndex()
     {
-        if (($model = Employee::findOne(['user_id'=>\Yii::$app->user->id])) == NULL) {
-            $model = new Employee();
-        };
-        if ($model->load(Yii::$app->request->post())){
-            $model->user_id = \Yii::$app->user->id;
-            if($model->save()){
-                return $this->redirect(['view', 'id' => $model->id]);
-            }
-        }
-        return $this->render('view', ['model' => $model]);
+        $searchModel = new EmployeeRoleSearch;
+        $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams());
+
+        return $this->render('index', [
+            'dataProvider' => $dataProvider,
+            'searchModel' => $searchModel,
+        ]);
     }
 
     /**
-     * Creates a new Employee model.
+     * Displays a single EmployeeRole model.
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionView($id)
+    {
+        $model = $this->findModel($id);
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        return $this->redirect(['view', 'id' => $model->id]);
+        } else {
+        return $this->render('view', ['model' => $model]);
+}
+    }
+
+    /**
+     * Creates a new EmployeeRole model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Employee;
+        $model = new EmployeeRole;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
-            return $this->render('create',              [
-                    'model' => $model,
+            return $this->render('create', [
+                'model' => $model,
             ]);
         }
     }
 
     /**
-     * Updates an existing Employee model.
+     * Updates an existing EmployeeRole model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -92,15 +93,14 @@ class MyProfileController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
-            return $this->render('update',
-                    [
-                    'model' => $model,
+            return $this->render('update', [
+                'model' => $model,
             ]);
         }
     }
 
     /**
-     * Deletes an existing Employee model.
+     * Deletes an existing EmployeeRole model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -113,15 +113,15 @@ class MyProfileController extends Controller
     }
 
     /**
-     * Finds the Employee model based on its primary key value.
+     * Finds the EmployeeRole model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Employee the loaded model
+     * @return EmployeeRole the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Employee::findOne($id)) !== null) {
+        if (($model = EmployeeRole::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

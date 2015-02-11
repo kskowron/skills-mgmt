@@ -14,6 +14,7 @@ use yii\widgets\Pjax;
 
 $this->title  = Yii::t('skills', 'Uassigned Skills List');
 
+$this->params['breadcrumbs'][] = ['label' => Yii::t('skills', 'My Profile'),'url' => ['my-profile/view']];
 $this->params['breadcrumbs'][] = ['label' => Yii::t('skills', 'My skills'),'url' => ['list']];
 
 $this->params['breadcrumbs'][] = $this->title;
