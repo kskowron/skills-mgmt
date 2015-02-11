@@ -5,11 +5,28 @@ namespace frontend\controllers;
 use common\models\Employee;
 use frontend\models\EmployeeSkillsExtSearch;
 use Yii;
-use yii\helpers\Url;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\web\Session;
 
 class ProfileController extends Controller {
+
+    public function behaviors() {
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['view'],
+                'rules' => [
+                    [
+                        'actions' => ['view'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
+        ];
+    }
 
     public function actionView() {
         $employee = Employee::findOne((int) Yii::$app->request->getQueryParam('id'));
@@ -20,9 +37,11 @@ class ProfileController extends Controller {
             $searchModel = new EmployeeSkillsExtSearch();
             $dataProvider = $searchModel->searchEmployeeSkills(Yii::$app->request->getQueryParams());
 
-            return $this->render('view', ['employee' => $employee, 
-                'dataProvider' => $dataProvider, 
-                'searchModel' => $searchModel]);
+            return $this->render('view', ['employee' => $employee,
+                        'dataProvider' => $dataProvider,
+                        'searchModel' => $searchModel,
+                        'profileBackUrl' => Yii::$app->session->get('profileBackUrl', NULL)
+                ]);
         }
     }
 

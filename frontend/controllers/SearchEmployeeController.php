@@ -8,6 +8,7 @@ use frontend\models\SkillSearchExt;
 use Yii;
 use yii\filters\AccessControl;
 use yii\helpers\ArrayHelper;
+use yii\helpers\Url;
 use yii\web\Controller;
 
 class SearchEmployeeController extends Controller {
@@ -32,11 +33,13 @@ class SearchEmployeeController extends Controller {
     }
 
     public function actionBySkill() {
+        Yii::$app->session->set('profileBackUrl', Yii::$app->request->getAbsoluteUrl());
+
         $skillSearch = new SkillSearchExt();
         $categories = $skillSearch->allWithCategories();
 
         $params = Yii::$app->request->getQueryParams();
-        
+
         $employeeSearch = new EmployeeSearchExt();
         $employees = $employeeSearch->searchBySkills($params);
 
@@ -48,6 +51,8 @@ class SearchEmployeeController extends Controller {
     }
 
     public function actionAllEmployees() {
+        Yii::$app->session->set('profileBackUrl', Yii::$app->request->getAbsoluteUrl());
+
         $searchModel = new EmployeeSearchExt();
         $dataProvider = $searchModel->searchAll(Yii::$app->request->getQueryParams());
 
