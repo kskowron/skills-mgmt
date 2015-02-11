@@ -20,10 +20,10 @@ class SearchEmployeeController extends Controller {
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['by-skill', 'index', 'all-employees'],
+                'only' => ['by-skill','all-employees'],
                 'rules' => [
                     [
-                        'actions' => ['by-skill', 'index', 'all-employees'],
+                        'actions' => ['by-skill','all-employees'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -33,6 +33,7 @@ class SearchEmployeeController extends Controller {
     }
 
     public function actionBySkill() {
+
         Yii::$app->session->set('profileBackUrl', Yii::$app->request->getAbsoluteUrl());
 
         $skillSearch = new SkillSearchExt();
@@ -48,10 +49,6 @@ class SearchEmployeeController extends Controller {
                     'searchModel' => $employeeSearch,
                     'dataProvider' => $employees,
                     'skillLevels' => SkillLevel::find()->asArray()->all()]);
-    }
-
-    public function actionIndex() {
-        return $this->render('index');
     }
 
     public function actionAllEmployees() {

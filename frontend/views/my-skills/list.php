@@ -13,6 +13,7 @@ use yii\widgets\Pjax;
 
 
 $this->title = Yii::t('skills', 'My skills');
+$this->params['breadcrumbs'][] = ['label' => Yii::t('skills', 'My Profile'),'url' => ['my-profile/view']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="employee-skill-index">

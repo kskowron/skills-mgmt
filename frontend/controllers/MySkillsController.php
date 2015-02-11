@@ -20,7 +20,7 @@ use yii\web\Controller;
 use yii\web\HttpException;
 use yii\web\NotFoundHttpException;
 
-class MyskillsController extends Controller
+class MySkillsController extends Controller
 {
 
     /**
@@ -31,10 +31,10 @@ class MyskillsController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['list'],
+                'only' => ['list','add-skill','delete-skill','gap-list','update-skill'],
                 'rules' => [
                     [
-                        'actions' => ['index', 'list'],
+                        'actions' => ['list','add-skill','delete-skill','gap-list','update-skill'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],

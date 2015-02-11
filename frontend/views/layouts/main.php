@@ -54,9 +54,6 @@ AppAsset::register($this);
             } else {
                 $menuItems = [];
                 $menuItems[] = [
-                    'label' => 'Profile', 'url' => ['/my-profile/view']
-                ];
-                $menuItems[] = [
                     'label' => 'Logout ('.Yii::$app->user->identity->username.')',
                     'url' => ['/site/logout'],
                     'linkOptions' => ['data-method' => 'post']

@@ -48,22 +48,24 @@ AppAsset::register($this);
                 $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
             } else {
                 $menuItems[] = [
+                    'label' => 'CRUD', 'items' => [
+                        ['label' => 'Category', 'url' => ['/crud/category/index']],
+                        ['label' => 'Employee', 'url' => ['/crud/employee/index']],
+                        ['label' => 'Employee Skill', 'url' => ['/crud/employee-skill/index']],
+                        ['label' => 'Employee Role', 'url' => ['/crud/employee-role/index']],
+                        ['label' => 'Location', 'url' => ['/crud/location/index']],
+                        ['label' => 'Skill', 'url' => ['/crud/skill/index']],
+                        ['label' => 'Skill Level', 'url' => ['/crud/skill-level/index']],
+                        ['label' => 'User', 'url' => ['/crud/user/index']],
+
+                    ]
+                ];
+                $menuItems[] = [
                     'label' => 'Logout ('.Yii::$app->user->identity->username.')',
                     'url' => ['/site/logout'],
                     'linkOptions' => ['data-method' => 'post']
                 ];
             }
-            $menuItems[] = [
-                'label' => 'CRUD', 'items' => [
-                    ['label' => 'Category', 'url' => ['/crud/category/index']],
-                    ['label' => 'Employee', 'url' => ['/crud/employee/index']],
-                    ['label' => 'Employee Skill', 'url' => ['/crud/employee-skill/index']],
-                    ['label' => 'Location', 'url' => ['/crud/location/index']],
-                    ['label' => 'Skill', 'url' => ['/crud/skill/index']],
-                    ['label' => 'Skill Level', 'url' => ['/crud/skill-level/index']],
-                    ['label' => 'User', 'url' => ['/crud/user/index']],
-                ]
-            ];
             echo Nav::widget([
                 'options' => ['class' => 'navbar-nav navbar-right'],
                 'items' => $menuItems,
