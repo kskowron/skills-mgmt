@@ -33,6 +33,7 @@ class SearchEmployeeController extends Controller {
     }
 
     public function actionBySkill() {
+
         Yii::$app->session->set('profileBackUrl', Yii::$app->request->getAbsoluteUrl());
 
         $skillSearch = new SkillSearchExt();
