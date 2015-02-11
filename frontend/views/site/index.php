@@ -5,45 +5,44 @@ $this->title = 'My Yii Application';
 <div class="site-index">
 
     <div class="jumbotron">
-        <h1>Congratulations!</h1>
+        <h1>Welcome to the Skills Management Suite!</h1>
 
-        <p class="lead">You have successfully created your Yii-powered application.</p>
 
-        <p><a class="btn btn-lg btn-success" href="http://www.yiiframework.com">Get started with Yii</a></p>
+        <p></p>
+        <p>
+            <?= kartik\helpers\Html::a(\Yii::t('skills','Get started with Skills Management'),  \yii\helpers\Url::to(['site/login']),['class'=>"btn btn-lg btn-success"]) ?>
+        </p>
     </div>
 
     <div class="body-content">
 
         <div class="row">
             <div class="col-lg-4">
-                <h2>Heading</h2>
+                <h2>Skills search</h2>
 
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
+                <p> You can search your employee database by sets of skills and skill level.</p>
 
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/doc/">Yii Documentation &raquo;</a></p>
+                <p>
+                    <?= kartik\helpers\Html::a(\Yii::t('skills','Search by skill ...').'&raquo;',  \yii\helpers\Url::to(['search-employee/by-skill']),['class'=>"btn btn-default"]) ?>
+                </p>
             </div>
             <div class="col-lg-4">
-                <h2>Heading</h2>
+                <h2>Browse employees</h2>
 
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
+                <p>You can browse list of your emplyees with detailed profile view.</p>
 
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/forum/">Yii Forum &raquo;</a></p>
+                <p>
+                    <?= kartik\helpers\Html::a(\Yii::t('skills','Browse employees ...').'&raquo;',  \yii\helpers\Url::to(['search-employee/all-employees']),['class'=>"btn btn-default"]) ?>
+                </p>
             </div>
             <div class="col-lg-4">
-                <h2>Heading</h2>
+                <h2>My Profile</h2>
 
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
+                <p>If you are employee you can update you profile add new skills or change you current skills levels.</p>
 
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/extensions/">Yii Extensions &raquo;</a></p>
+                <p>
+                    <?= kartik\helpers\Html::a(\Yii::t('skills','My Profile ...').'&raquo;',  \yii\helpers\Url::to(['my-profile/view']),['class'=>"btn btn-default"]) ?>
+                </p>
             </div>
         </div>
 
