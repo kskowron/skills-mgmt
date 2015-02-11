@@ -2,12 +2,12 @@
 
 namespace frontend\controllers;
 
-use Yii;
 use common\models\Employee;
-use common\models\EmployeeSearch;
+use Yii;
+use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * ProfileController implements the CRUD actions for Employee model.
@@ -15,9 +15,24 @@ use yii\filters\VerbFilter;
 class MyProfileController extends Controller
 {
 
+
+    /**
+     * @inheritdoc
+     */
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['create','update','delete','view'],
+                'rules' => [
+                    [
+                        'actions' => ['create','update','delete','view'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
