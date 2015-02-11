@@ -12,10 +12,6 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="functions-content">
         <div class="row">
             <div class="col-lg-4">
-                <?= kartik\helpers\Html::a(Yii::t('skills', 'My Skills'), ['myskills/list'], ['class' => 'btn btn-primary btn-block'])
-                ?>
-            </div>
-            <div class="col-lg-4">
                 <?= kartik\helpers\Html::a(Yii::t('skills', 'Browse employees'), ['search-employee/all-employees'], ['class' => 'btn btn-primary btn-block'])
                 ?>
             </div>
@@ -23,18 +19,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?= kartik\helpers\Html::a(Yii::t('skills', 'Search employees by skills'), ['search-employee/by-skill'], ['class' => 'btn btn-primary btn-block'])
                 ?>
             </div>
-            <!--
-            <div class="col-lg-2">
-            <?= kartik\helpers\Html::button(Yii::t('skills', 'My Skills'), ['class' => 'btn btn-primary btn-block']) ?>
+            <div class="col-lg-4">
+                <?= kartik\helpers\Html::a(Yii::t('skills', 'My Profile'), ['my-profile/view'], ['class' => 'btn btn-primary btn-block'])
+                ?>
             </div>
-            <div class="col-lg-2">
-            <?= kartik\helpers\Html::button(Yii::t('skills', 'My Skills'), ['class' => 'btn btn-primary btn-block']) ?>
-            </div>
-            <div class="col-lg-2">
-            <?= kartik\helpers\Html::a(Yii::t('skills', 'My Profile'), ['my-profile/view'], ['class' => 'btn btn-primary btn-block'])
-            ?>
-            </div>
-            -->
         </div>
     </div>
     <div class="body-content">
