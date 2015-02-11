@@ -19,10 +19,10 @@ class SearchEmployeeController extends Controller {
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['by-skill'],
+                'only' => ['by-skill','all-employees'],
                 'rules' => [
                     [
-                        'actions' => ['by-skill'],
+                        'actions' => ['by-skill','all-employees'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -45,10 +45,6 @@ class SearchEmployeeController extends Controller {
                     'searchModel' => $employeeSearch,
                     'dataProvider' => $employees,
                     'skillLevels' => SkillLevel::find()->asArray()->all()]);
-    }
-
-    public function actionIndex() {
-        return $this->render('index');
     }
 
     public function actionAllEmployees() {
