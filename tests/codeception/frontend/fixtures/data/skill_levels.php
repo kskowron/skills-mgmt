@@ -3,27 +3,38 @@
 return [
     [
         'id' => 10000,
-        'name' => 'Programming languages',
+        'name' => 'None',
         'created_at' => '1423643227',
         'updated_at' => '1423643227'
     ],
     [
         'id' => 10001,
-        'name' => 'Databases',
+        'name' => 'Newbie',
         'created_at' => '1423643227',
         'updated_at' => '1423643227'
-    ],
+    ],    
     [
         'id' => 10002,
-        'name' => 'Business analysis',
+        'name' => 'Junior',
         'created_at' => '1423643227',
         'updated_at' => '1423643227'
     ],
     [
         'id' => 10003,
-        'name' => 'Management',
+        'name' => 'Specialist',
         'created_at' => '1423643227',
         'updated_at' => '1423643227'
-    ]
+    ],    
+    [
+        'id' => 10004,
+        'name' => 'Senior',
+        'created_at' => '1423643227',
+        'updated_at' => '1423643227'
+    ],
+    [
+        'id' => 10005,
+        'name' => 'Expert',
+        'created_at' => '1423643227',
+        'updated_at' => '1423643227'
+    ],    
 ];
-
