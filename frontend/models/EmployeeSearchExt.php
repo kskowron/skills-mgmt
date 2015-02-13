@@ -13,7 +13,7 @@ class EmployeeSearchExt extends EmployeeSearch {
     
     public function searchBySkills($params) {
         $params['skills_list'] = ArrayHelper::getValue($params, 'skills_list', (int) -1);
-        $params['skill_level'] = ArrayHelper::getValue($params, 'skill_level', (int) -1);
+        $params['skill_level'] = ArrayHelper::getValue($params, 'skill_level', NULL);
         
         // Searching for id of employees meeting requirements
         $q = new Query();
@@ -27,7 +27,7 @@ class EmployeeSearchExt extends EmployeeSearch {
         $sq->select('employee_id')->from(['es' => $q]);
 
         // Fetching employees with selected previously ids
-        $query = Employee::find()->distinct()->where(['in', 'id', array_map(function($arr) {
+        $query = Employee::find()->where(['in', 'id', array_map(function($arr) {
                         return (int) $arr['employee_id'];
                     }, $sq->all())]);
         
@@ -35,7 +35,7 @@ class EmployeeSearchExt extends EmployeeSearch {
         if(ArrayHelper::getValue($params, 'sort', NULL) == NULL) {
             $query->orderBy('lastName asc');
         }
-        
+       
         $dataProvider = new ActiveDataProvider(['query' => $query]);
 
         return $dataProvider;
