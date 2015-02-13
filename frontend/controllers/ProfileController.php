@@ -31,7 +31,7 @@ class ProfileController extends Controller {
     public function actionView() {
         $employee = Employee::findOne((int) Yii::$app->request->getQueryParam('id'));
         if ($employee == NULL) {
-            throw new NotFoundHttpException(Yii::t('skills', 'The requested employee does not exist.'));
+            throw new NotFoundHttpException(Yii::t('skills', Yii::t('skills', 'The requested employee does not exist.')));
         } else {
             /* var $searchModel EmployeeSkillsExtSearch */
             $searchModel = new EmployeeSkillsExtSearch();

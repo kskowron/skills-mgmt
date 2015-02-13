@@ -49,6 +49,7 @@ AppAsset::register($this);
             } else {
                 $menuItems[] = [
                     'label' => 'CRUD', 'items' => [
+                        ['label' => 'Business profile', 'url' => ['/crud/business-profile/index']],
                         ['label' => 'Category', 'url' => ['/crud/category/index']],
                         ['label' => 'Employee', 'url' => ['/crud/employee/index']],
                         ['label' => 'Employee Skill', 'url' => ['/crud/employee-skill/index']],

@@ -91,8 +91,8 @@ if (!is_null($dataProvider)) {
                                     $businessProfiles = array();
                                     /* @var $value EmployeeBusinessProfile */
                                     foreach ($data->getEmployeeBusinessProfiles()->orderBy('profile_order')->all() as $key => $value) {
-                                        array_push($businessProfiles, Html::a($value->businessProfile->name, Yii::$app->urlManager->createUrl(['profile/view',
-                                                            'id' => $data->id])));
+                                        array_push($businessProfiles, Html::a($value->businessProfile->name, Yii::$app->urlManager->createUrl(['business-profile/view',
+                                                            'id' => $value->businessProfile->id])));
                                     }
                                     return implode(', ', $businessProfiles);
                                 }
