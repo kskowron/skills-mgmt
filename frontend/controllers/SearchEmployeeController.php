@@ -8,6 +8,7 @@ use frontend\models\SkillSearchExt;
 use jk\util\SkillsHelper;
 use Yii;
 use yii\filters\AccessControl;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 
 class SearchEmployeeController extends Controller {
@@ -40,7 +41,12 @@ class SearchEmployeeController extends Controller {
         
         if( $form->load(Yii::$app->request->getQueryParams()) && $form->validate()) {
             $employeeSearch = new EmployeeSearchExt();
-            $dataProvider = $employeeSearch->searchBySkills(Yii::$app->request->getQueryParam($form->formName()));
+            // Preparing search params array. Some processing required to enable Pjax features.
+            $params = Yii::$app->request->getQueryParams();
+            $formParams = ArrayHelper::remove($params, $form->formName());
+            $searchParams = ArrayHelper::merge($params, $formParams);
+            
+            $dataProvider = $employeeSearch->searchBySkills($searchParams);
         } else {
             $dataProvider = NULL;
         }
