@@ -14,10 +14,8 @@ use yii\web\JsExpression;
 /* @var  $model EmployeeRole */
 
 
-$ajaxurl = Url::toRoute([
-    'crud/employee-role/employee-list',
-    'id' => $model->employee_id],
-    true);
+$s2helper = new \jarekkozak\widgets\Select2AjaxConfig(['url'=>['crud/employee-role/employee-list']]);
+
 ?>
 <div class="employee-role-form">
     <?php
@@ -30,19 +28,7 @@ $ajaxurl = Url::toRoute([
             'employee_id' => [
                 'type' => Form::INPUT_WIDGET,
                 'widgetClass' => Select2::className(),
-                'options' => [
-                    'options' => ['placeholder' => 'Enter User...'],
-                    'pluginOptions' => [
-                        'allowClear' => true,
-                        'ajax' => [
-                            'url' => $ajaxurl,
-                            'dataType' => 'json',
-                            'data' => new JsExpression('function(term,page) { return {search:term}; }'),
-                            'results' => new JsExpression('function(data,page) { return {results:data.results}; }'),
-                        ],
-                        'initSelection' => Select2Helper::initSelection($ajaxurl),
-                    ]
-                ]
+                'options' => $s2helper->getConfig(),
             ],
             'role' => ['type' => Form::INPUT_DROPDOWN_LIST, 'options' => ['placeholder' => 'Enter role...'], 'items'=> EmployeeRole::getRolesList()],
         ]
