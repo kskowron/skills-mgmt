@@ -4,6 +4,7 @@ namespace frontend\models;
 
 use common\models\base\EmployeeSkill;
 use common\models\Employee;
+use common\models\EmployeeBusinessProfile;
 use common\models\EmployeeSearch;
 use yii\data\ActiveDataProvider;
 use yii\db\Query;
@@ -54,4 +55,13 @@ class EmployeeSearchExt extends EmployeeSearch {
         }
         return $dataProvider;
     }
+    
+    public function searchByBusinessProfile($params) {
+        $dataProvider = $this->searchAll($params);
+        $q = new Query();
+        $q->select('employee_id')->from(EmployeeBusinessProfile::tableName())->where('business_profile_id = ' . $params['id']);
+        $dataProvider->query->andWhere(['in', 'id', $q]);
+        return $dataProvider;
+    }
+
 }
