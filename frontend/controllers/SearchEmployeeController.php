@@ -2,13 +2,12 @@
 
 namespace frontend\controllers;
 
-use common\models\SkillLevel;
 use frontend\models\EmployeeSearchExt;
+use frontend\models\SearchBySkillsForm;
 use frontend\models\SkillSearchExt;
+use jk\util\SkillsHelper;
 use Yii;
 use yii\filters\AccessControl;
-use yii\helpers\ArrayHelper;
-use yii\helpers\Url;
 use yii\web\Controller;
 
 class SearchEmployeeController extends Controller {
@@ -33,22 +32,25 @@ class SearchEmployeeController extends Controller {
     }
 
     public function actionBySkill() {
-
         Yii::$app->session->set('profileBackUrl', Yii::$app->request->getAbsoluteUrl());
-
+        
+        $form = new SearchBySkillsForm();
         $skillSearch = new SkillSearchExt();
         $categories = $skillSearch->allWithCategories();
-
-        $params = Yii::$app->request->getQueryParams();
-
-        $employeeSearch = new EmployeeSearchExt();
-        $employees = $employeeSearch->searchBySkills($params);
-
-        return $this->render('by-skill', ['categories' => $categories,
-                    'skillsList' => ArrayHelper::getValue($params, 'skills_list', []),
-                    'searchModel' => $employeeSearch,
-                    'dataProvider' => $employees,
-                    'skillLevels' => SkillLevel::find()->asArray()->all()]);
+        
+        if( $form->load(Yii::$app->request->getQueryParams()) && $form->validate()) {
+            $employeeSearch = new EmployeeSearchExt();
+            $dataProvider = $employeeSearch->searchBySkills(Yii::$app->request->getQueryParam($form->formName()));
+        } else {
+            $dataProvider = NULL;
+        }
+        
+        return $this->render('by-skill', [
+                                            'model' => $form, 
+                                            'data' => $categories,
+                                            'levels' => SkillsHelper::getLevels(),
+                                            'dataProvider' => $dataProvider
+                                          ]);
     }
 
     public function actionAllEmployees() {
@@ -60,5 +62,7 @@ class SearchEmployeeController extends Controller {
         return $this->render('all-employees', ['searchModel' => $searchModel,
                     'dataProvider' => $dataProvider]);
     }
+    
+
 
 }

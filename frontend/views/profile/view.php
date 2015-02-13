@@ -4,6 +4,7 @@ use common\models\Employee;
 use common\models\EmployeeBusinessProfile;
 use kartik\detail\DetailView;
 use kartik\grid\GridView;
+use kartik\helpers\Enum;
 use kartik\helpers\Html;
 use yii\helpers\Url;
 use yii\web\View;
@@ -26,7 +27,7 @@ if ($employee->employeeBusinessProfiles !== NULL) {
 
 <div class="profile-view">
     <div class="page-header">
-        <h1><?= Html::encode(Yii::t('skills', 'Profile of ') . $employee->firstName . ' ' . $employee->lastName); ?></h1>
+        <h1><?= Enum::properize($employee->firstName . ' ' . $employee->lastName) . ' ' . Html::encode(Yii::t('skills', 'profile')); ?></h1>
     </div>
     <div class="row">
         <div class="col-md-3">
