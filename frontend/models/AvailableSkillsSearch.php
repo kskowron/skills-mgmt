@@ -7,13 +7,10 @@
 
 namespace frontend\models;
 
-use common\models\Category;
 use common\models\Employee;
-use common\models\EmployeeSkill;
 use common\models\SkillSearch;
 use Yii;
 use yii\data\ActiveDataProvider;
-use yii\db\Query;
 use yii\helpers\ArrayHelper;
 
 /**
@@ -43,15 +40,7 @@ class AvailableSkillsSearch extends SkillSearch
 
     public function search($params)
     {
-
-        $subQuery = EmployeeSkill::find()->andWhere('employee_id = :id', [':id'=>$this->loggedEmployee->id]);
-
-        /* @var $query Query */
-        $query = self::find();
-        //$query->leftJoin(['a'=>EmployeeSkill::tableName()], self::tableName().'.id = a.skill_id');
-        $query->leftJoin(['a'=>$subQuery], self::tableName().'.id = a.skill_id');
-        $query->leftJoin(['b'=>  Category::tableName()],self::tableName().'.category_id = b.id');
-        $query->andWhere('a.skill_id IS NULL');
+        $query = self::getUnassignedSkillsQuery($this->loggedEmployee->id);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -70,7 +59,6 @@ class AvailableSkillsSearch extends SkillSearch
                 ],
             ]
         ]);
-
 
         if (!($this->load($params) && $this->validate())) {
             return $dataProvider;

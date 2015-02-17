@@ -7,14 +7,14 @@ use yii\test\ActiveFixture;
 /**
  * User fixture
  */
-class UserFixture extends ActiveFixture
+class CategoryFixture extends ActiveFixture
 {
-    public $modelClass = 'common\models\User';
-    public $dataFile = '@tests/codeception/common/fixtures/data/user.php';
+    public $modelClass = 'common\models\Category';
+    public $dataFile = '@tests/codeception/common/fixtures/data/category.php';
+
 
     public function unload()
     {
         $this->resetTable();
     }
-
 }

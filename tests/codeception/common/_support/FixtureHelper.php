@@ -2,8 +2,13 @@
 
 namespace tests\codeception\common\_support;
 
-use tests\codeception\common\fixtures\UserFixture;
 use Codeception\Module;
+use tests\codeception\common\fixtures\CategoryFixture;
+use tests\codeception\common\fixtures\EmployeeFixture;
+use tests\codeception\common\fixtures\EmployeeSkillFixture;
+use tests\codeception\common\fixtures\SkillFixture;
+use tests\codeception\common\fixtures\SkillLevelFixture;
+use tests\codeception\common\fixtures\UserFixture;
 use yii\test\FixtureTrait;
 
 /**
@@ -34,6 +39,7 @@ class FixtureHelper extends Module
      */
     public function _beforeSuite($settings = [])
     {
+        $this->unloadFixtures();
         $this->loadFixtures();
     }
 
@@ -50,11 +56,40 @@ class FixtureHelper extends Module
      */
     public function fixtures()
     {
-        return [
-            'user' => [
-                'class' => UserFixture::className(),
-                'dataFile' => '@tests/codeception/common/fixtures/data/init_login.php',
-            ],
-        ];
+        return \tests\codeception\common\fixtures\FixturesMapHelper::getFixtures();
+//
+//        [
+//            'employee' => [
+//                'class' => EmployeeFixture::className(),
+//            ],
+//            'category' => [
+//                'class' => CategoryFixture::className(),
+//            ],
+//            'level' => [
+//                'class' => SkillLevelFixture::className(),
+//            ],
+//            'skill' => [
+//                'class' => SkillFixture::className(),
+//                'dataFile' => '@tests/codeception/common/fixtures/data/skill.php',
+//                //'dataFile' => FALSE,
+//            ],
+//            'employee_skill' => [
+//                'class' => EmployeeSkillFixture::className(),
+//                'dataFile' => '@tests/codeception/common/fixtures/data/employee_skill.php',
+//                //'dataFile' => FALSE,
+//
+//            ],
+//            'location' => [
+//                'class' => \tests\codeception\common\fixtures\LocationFixture::className(),
+//                //'dataFile' => FALSE,
+//
+//            ],
+//            'user' => [
+//                'class' => UserFixture::className(),
+//                'dataFile' => '@tests/codeception/common/fixtures/data/user.php',
+//                //'dataFile' => FALSE,
+//            ],
+//
+//        ];
     }
 }
