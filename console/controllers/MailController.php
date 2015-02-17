@@ -7,7 +7,12 @@
 
 namespace console\controllers;
 
+use common\models\Employee;
+use common\models\SkillSearch;
+use yii\base\Exception;
 use yii\console\Controller;
+use yii\log\Logger;
+
 /**
  * Description of MailController
  *
@@ -15,17 +20,17 @@ use yii\console\Controller;
  */
 class MailController extends Controller
 {
-    /** 
+    /**
      * @var string
      * First parameter to be set
      */
-    public $first;
+    public $textonly = false;
 
     public function options($actionID)
     {
         $out = parent::options($actionID);
-        if($actionID == 'unassigned-skills'){
-            $out[] = 'first';
+        if ($actionID == 'unassigned-skills') {
+            $out[] = 'textonly';
         }
         return $out;
     }
@@ -36,20 +41,34 @@ class MailController extends Controller
      * Parametr to be set before start action
      * @return int
      */
-    public function actionUnassignedSkills($params = null){
-
-        echo "Employees with gap of skills\n";
-
-        $employee = \common\models\Employee::find();
-        /* @var $value common\models\Employee */
-        foreach ($employee->batch() as $key => $value) {
-            //echo $value->fullName . "\n";
+    public function actionUnassignedSkills($id = null)
+    {
+        $this->stdout("Start sendig notice to employees with gap of skills:".$id);
+        if ($id !== null) {
+            $employeeQuery = Employee::find()->where(['id' => (int) $id]);
+        } else {
+            $employeeQuery = Employee::find();
         }
+
+        $count = 0;
+        /* @var $employee Employee */
+        foreach ($employeeQuery->each() as $employee) {
+            $notice = new \common\lib\mail\UnassignedSkillsNotice(['employee_id' => $employee->id,
+                "textonly" => $this->textonly]);
+            if ($notice->getCountUnassignedSkills() > 0) {
+                // Send email to employee
+                if ($notice->sendMail() == TRUE) {
+                    $this->stdout("Send to:".$employee->fullName);
+                    $count++;
+                }
+            }
+        }
+        $this->stdout("End of sending notice to employees. Sent:".$count);
         return 0;
     }
 
-    public function actionSecond(){
-        return 0;
+    public function stdout($string)
+    {
+        return parent::stdout($string."\n");
     }
-
 }
