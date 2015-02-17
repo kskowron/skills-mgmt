@@ -2,10 +2,15 @@
 
 namespace tests\codeception\frontend\unit\models;
 
-use tests\codeception\frontend\unit\DbTestCase;
-use tests\codeception\common\fixtures\UserFixture;
 use Codeception\Specify;
 use frontend\models\SignupForm;
+use tests\codeception\common\fixtures\CategoryFixture;
+use tests\codeception\common\fixtures\EmployeeFixture;
+use tests\codeception\common\fixtures\EmployeeSkillFixture;
+use tests\codeception\common\fixtures\SkillFixture;
+use tests\codeception\common\fixtures\SkillLevelFixture;
+use tests\codeception\common\fixtures\UserFixture;
+use tests\codeception\frontend\unit\DbTestCase;
 
 class SignupFormTest extends DbTestCase
 {
@@ -47,6 +52,27 @@ class SignupFormTest extends DbTestCase
                 'class' => UserFixture::className(),
                 'dataFile' => '@tests/codeception/frontend/unit/fixtures/data/models/user.php',
             ],
+            'employee' => [
+                'class' => EmployeeFixture::className(),
+                'dataFile' => FALSE,
+            ],
+            'category' => [
+                'class' => CategoryFixture::className(),
+                'dataFile' => FALSE,
+            ],
+            'level' => [
+                'class' => SkillLevelFixture::className(),
+                'dataFile' => FALSE,
+            ],
+            'skill' => [
+                'class' => SkillFixture::className(),
+                'dataFile' => FALSE,
+            ],
+            'employee_skill' => [
+                'class' => EmployeeSkillFixture::className(),
+                'dataFile' => FALSE,
+            ],
+
         ];
     }
 
