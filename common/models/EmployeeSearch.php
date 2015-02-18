@@ -56,6 +56,7 @@ class EmployeeSearch extends Employee
 
     /**
      * Search employee by hist first or last name or id. Returns array of
+     * employees limited to 20 items
      * 
      * [
      *   0=>['id'=>id, 'text'=>value ]

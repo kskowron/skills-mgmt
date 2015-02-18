@@ -38,7 +38,10 @@ $this->params['breadcrumbs'][] = $this->title;
                     return Html::encode($model->employee->fullName);
                 }
             ],
-            'role',
+            [
+                'attribute'=>'role',
+                'value'=>'name',
+            ],
             [
                 'class' => 'yii\grid\ActionColumn',
                 'buttons' => [

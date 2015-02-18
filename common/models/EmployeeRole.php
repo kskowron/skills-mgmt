@@ -35,11 +35,33 @@ class EmployeeRole extends \common\models\base\EmployeeRole
         ];
     }
 
+    /**
+     * Gets list of roles
+     *
+     * @return type
+     */
     public static function getRolesList()
     {
         return [
             self::REGULAR_USER => \Yii::t('skills', 'Regular Employee'),
             self::ADMINISTRATOR => \Yii::t('skills', 'Administrator')
         ];
+    }
+
+    public static function getRoleName($index){
+        $list = self::getRolesList();
+        $index = (int)$index;
+        if(isset($list[$index])){
+            return $list[$index];
+        }
+        return $list[self::REGULAR_USER];
+    }
+
+    /**
+     * Gets role name
+     * @return string
+     */
+    public function getName(){
+        return self::getRoleName($this->role);
     }
 }

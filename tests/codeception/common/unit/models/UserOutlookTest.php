@@ -23,7 +23,6 @@ class UserOutlookTest extends DbTestCase
     protected function setUp()
     {
         $this->mockApplication();
-        $this->unloadFixtures();
         $this->loadFixtures();
         \jk\sys\DependencyManager::register([
             'jk\sys\IProperties' => [
@@ -41,6 +40,7 @@ class UserOutlookTest extends DbTestCase
      */
     protected function tearDown()
     {
+        $this->unloadFixtures();
         $this->destroyApplication();
     }
 

@@ -49,4 +49,21 @@ class SkillSearch extends Skill
 
         return $dataProvider;
     }
+
+    /**
+     * Create query for unassigned skills
+     * 
+     * @param int $employee_id
+     * @return \yii\db\Query
+     */
+    public function getUnassignedSkillsQuery($employee_id){
+        $subQuery = EmployeeSkill::find()->andWhere('employee_id = :id', [':id'=>$employee_id]);
+        /* @var $query Query */
+        $query = self::find();
+        $query->leftJoin(['a'=>$subQuery], self::tableName().'.id = a.skill_id');
+        $query->leftJoin(['b'=>  Category::tableName()],self::tableName().'.category_id = b.id');
+        $query->andWhere('a.skill_id IS NULL');
+        return $query;
+    }
+
 }
