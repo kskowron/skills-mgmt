@@ -5,12 +5,13 @@ namespace common\models\base;
 use Yii;
 
 /**
- * This is the base-model class for table "business_profile".
+ * This is the model class for table "business_profile".
  *
  * @property integer $id
  * @property string $name
+ * @property string $description
  *
- * @property \common\models\EmployeeBusinessProfile[] $employeeBusinessProfiles
+ * @property EmployeeBusinessProfile[] $employeeBusinessProfiles
  */
 class BusinessProfile extends \yii\db\ActiveRecord
 {
@@ -29,6 +30,7 @@ class BusinessProfile extends \yii\db\ActiveRecord
     {
         return [
             [['name'], 'required'],
+            [['description'], 'string'],
             [['name'], 'string', 'max' => 45],
             [['name'], 'unique']
         ];
@@ -42,6 +44,7 @@ class BusinessProfile extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('skills', 'ID'),
             'name' => Yii::t('skills', 'Name'),
+            'description' => Yii::t('skills', 'Description'),
         ];
     }
 
@@ -50,6 +53,6 @@ class BusinessProfile extends \yii\db\ActiveRecord
      */
     public function getEmployeeBusinessProfiles()
     {
-        return $this->hasMany(\common\models\EmployeeBusinessProfile::className(), ['business_profile_id' => 'id']);
+        return $this->hasMany(EmployeeBusinessProfile::className(), ['business_profile_id' => 'id']);
     }
 }
