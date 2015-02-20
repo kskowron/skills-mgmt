@@ -10,7 +10,9 @@ use Yii;
  * @property integer $id
  * @property integer $business_profile_id
  * @property integer $employee_id
- * @property string $profile_order
+ * @property integer $profile_order
+ * @property integer $created_at
+ * @property integer $updated_at
  *
  * @property \common\models\Employee $employee
  * @property \common\models\BusinessProfile $businessProfile
@@ -32,8 +34,7 @@ class EmployeeBusinessProfile extends \yii\db\ActiveRecord
     {
         return [
             [['business_profile_id', 'employee_id', 'profile_order'], 'required'],
-            [['business_profile_id', 'employee_id'], 'integer'],
-            [['profile_order'], 'string', 'max' => 1]
+            [['business_profile_id', 'employee_id','profile_order'], 'integer']
         ];
     }
 
