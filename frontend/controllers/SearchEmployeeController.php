@@ -5,7 +5,7 @@ namespace frontend\controllers;
 use frontend\models\EmployeeSearchExt;
 use frontend\models\SearchBySkillsForm;
 use frontend\models\SkillSearchExt;
-use jk\util\SkillsHelper;
+use common\lib\util\SkillsHelper;
 use Yii;
 use yii\filters\AccessControl;
 use yii\helpers\ArrayHelper;
