@@ -152,9 +152,9 @@ class UnassignedSkillsNoticeTest extends DbTestCase
         $this->assertContains($object->employee->user->email, $message);
         $this->assertContains($object->employee->user->email, $message);
 
-        $needle = "CATEGORY4/SKILL411";
+        $needle = "CATEGORY4/SKILL412";
         $this->assertContains($needle, $message);
-        $needle = "CATEGORY5/SKILL515";
+        $needle = "CATEGORY5/SKILL513";
         $this->assertContains($needle, $message);
 
         $needle = "<p> - CATEGORY4/SKILL411</p>";
