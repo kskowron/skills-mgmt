@@ -6,12 +6,30 @@ use common\models\EmployeeFile;
 use common\models\EmployeeFileSearch;
 use jk\helpers\FlashHelper;
 use Yii;
+use yii\filters\AccessControl;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\UploadedFile;
 
 class MyFilesController extends Controller {
+    
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['delete','get','upload','view'],
+                'rules' => [
+                    [
+                        'actions' => ['delete','get','upload','view'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
+        ];
+    }    
 
     public function actionGet($fileId) {
 
@@ -52,18 +70,11 @@ class MyFilesController extends Controller {
         $files = $fileSearch->searchByEmployee(['owner' => Yii::$app->user->id]);
         $uploadDisabled = ($files->getCount() < 3) ? false : true;
 
-        $imageTypes = ['image/png', 'image/jpeg', 'image/jpg'];
-        $docTypes = ['application/msword', 
-                     'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
-        $presentationTypes = ['application/vnd.ms-powerpoint', 
-                              'application/vnd.openxmlformats-officedocument.presentationml.slideshow', 
-                              'application/vnd.openxmlformats-officedocument.presentationml.presentation'];
-        $acceptableFileTypes = ArrayHelper::merge($imageTypes, $presentationTypes, $docTypes);
+
 
         return $this->render('view', ['dataProvider' => $files, 
                                       'model' => $model, 
-                                      'uploadDisabled' => $uploadDisabled, 
-                                      'acceptableFileTypes' => $acceptableFileTypes]);
+                                      'uploadDisabled' => $uploadDisabled]);
     }
 
     public function actionUpload() {
