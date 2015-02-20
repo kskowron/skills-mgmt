@@ -16,5 +16,9 @@ return [
             // for the mailer to send real emails.
             'useFileTransport' => true,
         ],
+        'mongodb' => [
+            'class' => '\yii\mongodb\Connection',
+            'dsn' => 'mongodb://developer:password@localhost:27017/skills',
+        ],
     ],
 ];

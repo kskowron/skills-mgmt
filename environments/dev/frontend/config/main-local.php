@@ -17,6 +17,7 @@ if (!YII_ENV_TEST) {
     $config['modules']['gii']['class']      = 'yii\gii\Module';
     $config['modules']['gii']['generators'] = [
         'kartikgii-crud' => ['class' => 'warrence\kartikgii\crud\Generator'],
+        //'mongoDbModel' => ['class' => 'yii\mongodb\gii\model\Generator']
     ];
 }
 
