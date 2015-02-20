@@ -96,18 +96,9 @@ $this->params['breadcrumbs'][] = $this->title;
             ?>
         </div>
         <div class="col-lg-3">
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-4">
-        </div>
-        <div class="col-lg-3">
             <?= Html2::a(Yii::t('skills', 'My Files'), ['my-files/view'],
                 ['class' => 'btn btn-primary btn-block'])
-            ?>
-        </div>
-        <div class="col-lg-3">
+            ?>            
         </div>
     </div>
-
 </div>

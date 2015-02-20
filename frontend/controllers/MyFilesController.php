@@ -4,7 +4,7 @@ namespace frontend\controllers;
 
 use common\models\EmployeeFile;
 use common\models\EmployeeFileSearch;
-use jk\helpers\FlashHelper;
+use jarekkozak\helpers\FlashHelper;
 use Yii;
 use yii\filters\AccessControl;
 use yii\helpers\ArrayHelper;
