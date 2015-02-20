@@ -5,7 +5,6 @@ use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use frontend\assets\AppAsset;
-use jk\widgets\Alert;
 
 /* @var $this \yii\web\View */
 /* @var $content string */
@@ -73,7 +72,7 @@ AppAsset::register($this);
                             : [],
                 ])
                 ?>
-<?= Alert::widget() ?>
+<?= \jarekkozak\widgets\AlertGrowl::widget() ?>
 <?= $content ?>
             </div>
         </div>
