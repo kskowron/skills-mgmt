@@ -54,9 +54,7 @@ class SkillSearchTest extends DbTestCase
      */
     protected function setUp()
     {
-        $this->mockApplication();
-        $this->unloadFixtures();
-        $this->loadFixtures();
+        parent::setUp();
     }
 
     /**
@@ -65,7 +63,7 @@ class SkillSearchTest extends DbTestCase
      */
     protected function tearDown()
     {
-        $this->destroyApplication();
+        parent::tearDown();
     }
 
 

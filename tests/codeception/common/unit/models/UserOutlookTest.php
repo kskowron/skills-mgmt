@@ -22,16 +22,17 @@ class UserOutlookTest extends DbTestCase
      */
     protected function setUp()
     {
-        $this->mockApplication();
-        $this->loadFixtures();
-        \jk\sys\DependencyManager::register([
-            'jk\sys\IProperties' => [
-                'class' => 'jk\sys\PropertiesFile',
+
+        parent::setUp();
+
+        \jarekkozak\sys\DependencyManager::register([
+            'jarekkozak\sys\IProperties' => [
+                'class' => 'jarekkozak\sys\PropertiesFile',
                 'filename' => '$HOME/.secret/skills-secret'
             ],
-            'jk\sys\ILog' => 'jk\sys\LogConsole'
+            'jk\sys\ILog' => 'jarekkozak\sys\LogConsole'
         ]);
-        $this->property = \Yii::$container->get('jk\sys\IProperties');
+        $this->property = \Yii::$container->get('jarekkozak\sys\IProperties');
     }
 
     /**
@@ -40,8 +41,7 @@ class UserOutlookTest extends DbTestCase
      */
     protected function tearDown()
     {
-        $this->unloadFixtures();
-        $this->destroyApplication();
+        parent::tearDown();
     }
 
     /**

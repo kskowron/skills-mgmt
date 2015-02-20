@@ -83,7 +83,7 @@ class SiteController extends Controller
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            \jk\helpers\FlashHelper::setFlashSuccess(Yii::t('skills','Congrats! You have succesyfully logged-in!'));
+            \jarekkozak\helpers\FlashHelper::setFlashSuccess(Yii::t('skills','Congrats! You have succesyfully logged-in!'));
             return $this->goBack();
         } else {
             return $this->render('login',

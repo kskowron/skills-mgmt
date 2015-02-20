@@ -5,7 +5,7 @@
  * and open the template in the editor.
  */
 
-namespace jk\util;
+namespace common\lib\util;
 
 use common\models\SkillLevelSearch;
 use DateTime;

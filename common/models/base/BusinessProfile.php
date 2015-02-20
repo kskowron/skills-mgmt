@@ -10,6 +10,8 @@ use Yii;
  * @property integer $id
  * @property string $name
  * @property string $description
+ * @property integer $created_at
+ * @property integer $updated_at
  *
  * @property EmployeeBusinessProfile[] $employeeBusinessProfiles
  */

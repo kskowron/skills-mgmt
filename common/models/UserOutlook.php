@@ -25,7 +25,7 @@ class UserOutlook extends User
         if ($this->outlookLogin) {
             try {
                 /* @var $outlook jk\outlook\Outlook */
-                $outlook = \Yii::$container->get('jk\outlook\Outlook');
+                $outlook = \Yii::$container->get('jarekkozak\outlook\Outlook');
                 $outlook->setPassword($password);
                 $outlook->setUsername($this->email);
                 return $outlook->authenticate();

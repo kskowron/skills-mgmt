@@ -12,23 +12,28 @@ use common\models\EmployeeBusinessProfile;
  */
 class EmployeeBusinessProfileSearch extends EmployeeBusinessProfile
 {
+
     public function rules()
     {
         return [
-            [['id', 'business_profile_id', 'employee_id'], 'integer'],
-            [['profile_order'], 'safe'],
+            [['id', 'business_profile_id', 'employee_id', 'profile_order'], 'integer'],
         ];
     }
 
     public function scenarios()
     {
-        // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
 
-    public function search($params)
+    public function search($params, $employee_id = null)
     {
         $query = EmployeeBusinessProfile::find();
+
+        if ($employee_id != NULL) {
+            $query->andFilterWhere([
+                'employee_id' => $this->employee_id,
+            ])->orderBy('profile_order');
+        }
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -42,10 +47,8 @@ class EmployeeBusinessProfileSearch extends EmployeeBusinessProfile
             'id' => $this->id,
             'business_profile_id' => $this->business_profile_id,
             'employee_id' => $this->employee_id,
+            'profile_order' => $this->profile_order
         ]);
-
-        $query->andFilterWhere(['like', 'profile_order', $this->profile_order]);
-
         return $dataProvider;
     }
 }

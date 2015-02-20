@@ -56,12 +56,10 @@ class MailControllerTest extends DbTestCase
      */
     protected function setUp()
     {
-        $this->mockApplication();
+
+        parent::setUp();
+
         Yii::$classMap['yii\helpers\Console'] = __DIR__.'/Console.php';
-
-        $this->unloadFixtures();
-        $this->loadFixtures();
-
         Yii::$app->mailer->fileTransportCallback = function ($mailer, $message) {
             return 'testing_message.eml';
         };
@@ -74,7 +72,7 @@ class MailControllerTest extends DbTestCase
      */
     protected function tearDown()
     {
-        $this->destroyApplication();
+        parent::tearDown();
         @unlink($this->getMessageFile());
     }
 
