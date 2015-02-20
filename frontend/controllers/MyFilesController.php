@@ -14,18 +14,19 @@ use yii\web\UploadedFile;
 class MyFilesController extends Controller {
 
     public function actionGet($fileId) {
-        //$model = $this->findModel($fileId);
+
+        //Due to unknown reason findOne() method does not work on Windows. Workaround used.
+        // $file = $this->findModel($fileId);
         $files = EmployeeFile::findAll(['_id' => $fileId, 'owner' => Yii::$app->user->id]);
         $file = ArrayHelper::getValue($files, (int) 0, NULL);
-        if($file !== NULL) {
+        if ($file !== NULL) {
             Yii::$app->response->setDownloadHeaders($file->filename, $file->contentType, false, $file->length)->send();
             echo $file->file->getBytes();
         } else {
             throw new NotFoundHttpException(Yii::t('skills', 'File not found or you are not the owner.'));
         }
-        
     }
-    
+
     public function actionDelete($fileId) {
         $deletedFiles = EmployeeFile::deleteAll(['_id' => $fileId, 'owner' => Yii::$app->user->id]);
         if ($deletedFiles > 0) {
@@ -49,8 +50,20 @@ class MyFilesController extends Controller {
 
         $fileSearch = new EmployeeFileSearch();
         $files = $fileSearch->searchByEmployee(['owner' => Yii::$app->user->id]);
-        $uploadDisabled = ($files->getCount() <3) ? false : true;
-        return $this->render('view', ['dataProvider' => $files, 'model' => $model, 'uploadDisabled' => $uploadDisabled]);
+        $uploadDisabled = ($files->getCount() < 3) ? false : true;
+
+        $imageTypes = ['image/png', 'image/jpeg', 'image/jpg'];
+        $docTypes = ['application/msword', 
+                     'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+        $presentationTypes = ['application/vnd.ms-powerpoint', 
+                              'application/vnd.openxmlformats-officedocument.presentationml.slideshow', 
+                              'application/vnd.openxmlformats-officedocument.presentationml.presentation'];
+        $acceptableFileTypes = ArrayHelper::merge($imageTypes, $presentationTypes, $docTypes);
+
+        return $this->render('view', ['dataProvider' => $files, 
+                                      'model' => $model, 
+                                      'uploadDisabled' => $uploadDisabled, 
+                                      'acceptableFileTypes' => $acceptableFileTypes]);
     }
 
     public function actionUpload() {

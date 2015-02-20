@@ -2,6 +2,7 @@
 
 use kartik\form\ActiveForm;
 use kartik\grid\GridView;
+use kartik\helpers\Enum;
 use kartik\helpers\Html;
 use kartik\widgets\FileInput;
 use yii\web\View;
@@ -17,14 +18,18 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php
     echo GridView::widget([
         'dataProvider' => $dataProvider,
+        'showOnEmpty' => false,
+        'responsive' => true,
+        'hover' => true,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-            ['label' => Yii::t('skills', 'File contents')],
+            'filename',
+            ['label' => Yii::t('skills', 'Size'), 'value' => function($model) { return Enum::formatBytes($model->length);}],
             [
                 'class' => 'yii\grid\ActionColumn',
                 'template' => '{view} {delete}',
                 'buttons' => ['view' => function ($url, $model) {
-                        return Html::a(Html::icon('eye-open'), Yii::$app->urlManager->createUrl(['my-files/get', 'fileId' => (string) $model->_id]), [ 'title' => Yii::t('yii', 'Download file')
+                        return Html::a(Html::icon('download-alt'), Yii::$app->urlManager->createUrl(['my-files/get', 'fileId' => (string) $model->_id]), [ 'title' => Yii::t('yii', 'Download file')
                         ]);
                     },
                             'delete' => function ($url, $model) {
@@ -38,10 +43,14 @@ $this->params['breadcrumbs'][] = $this->title;
             ]);
             ?>
             <div>
+                <h3><?= Yii::t('skills', 'Choose file to upload'); ?></h3>
+                <?php if ($uploadDisabled) {
+                    echo '<div class="alert alert-info">' . Yii::t('skills', 'Upload of up to 3 files available. Please delete one to upload another.') . '</div>';
+                } ?>
                 <?php
                 $form = ActiveForm::begin(['action' => Yii::$app->urlManager->createUrl(['my-files/upload']), 'method' => 'post', 'options' => ['enctype' => 'multipart/form-data']]);
                 echo $form->field($model, 'file')->widget(FileInput::classname(), [
-                    'options' => ['accept' => 'image/*'],
+                    'options' => ['accept' => implode(',', $acceptableFileTypes)],
                     'disabled' => $uploadDisabled,
                     'pluginOptions' => ['allowedFileExtensions' => ['jpg', 'png', 'jpeg', 'doc', 'docx', 'ppt', 'pptx'],]
                 ]);

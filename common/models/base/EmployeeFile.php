@@ -2,6 +2,7 @@
 
 namespace common\models\base;
 
+use Yii;
 use yii\mongodb\file\ActiveRecord;
 
 /**
@@ -26,25 +27,27 @@ use yii\mongodb\file\ActiveRecord;
  * @property string $description
  * @property string $owner Description
  */
-class EmployeeFile extends ActiveRecord
-{
+class EmployeeFile extends ActiveRecord {
 
-    public static function collectionName()
-    {
+    public static function collectionName() {
         return 'files';
     }
 
-    public function rules()
-    {
+    public function rules() {
         return[
-            [['description', 'contentType'], 'required'],
+            [['owner'], 'required'],
         ];
     }
 
-    public function attributes()
-    {
+    public function attributeLabels() {
+        return [
+            'filename' => Yii::t('skills', 'File name'),
+        ];
+    }
+
+    public function attributes() {
         return array_merge(
-                parent::attributes(), ['contentType', 'description','owner']
+                parent::attributes(), ['contentType', 'description', 'owner']
         );
     }
 
