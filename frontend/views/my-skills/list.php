@@ -103,7 +103,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'template'=>'{update}  {delete}',
                 'buttons' => [
                 'update' => function ($url, $model) {
-                    return Html::a('<span class="glyphicon glyphicon-pencil"></span>', Yii::$app->urlManager->createUrl(['myskills/update-skill','id' => $model->id,'edit'=>'t']), [
+                    return Html::a('<span class="glyphicon glyphicon-pencil"></span>', Yii::$app->urlManager->createUrl(['my-skills/update-skill','id' => $model->id,'edit'=>'t']), [
                                                     'title' => Yii::t('yii', 'Edit'),
                     ]);},
                 'delete' => function ($url, $model) {

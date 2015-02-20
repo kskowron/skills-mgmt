@@ -9,8 +9,8 @@ use common\models\SkillLevelSearch;
 use common\models\User;
 use frontend\models\AvailableSkillsSearch;
 use frontend\models\MySkillsSearch;
-use jk\helpers\FlashHelper;
-use jk\util\SkillsHelper;
+use jarekkozak\helpers\FlashHelper;
+use common\lib\util\SkillsHelper;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
@@ -95,22 +95,6 @@ class MySkillsController extends Controller
                     }
                 }
                 $model->updateMySkill();
-
-                // custom output to return to be displayed as the editable grid cell
-                // data. Normally this is empty - whereby whatever value is edited by 
-                // in the input by user is updated automatically.
-                // specific use case where you need to validate a specific
-                // editable column posted when you have more than one 
-                // EditableColumn in the grid view. We evaluate here a 
-                // check to see if buy_amount was posted for the Book model
-//                if (isset($posted['buy_amount'])) {
-//                    $output = Yii::$app->formatter->asDecimal($model->buy_amount,
-//                        2);
-//                }
-                // similarly you can check if the name attribute was posted as well
-                // if (isset($posted['name'])) {
-                //   $output =  ''; // process as you need
-                // } 
                 $out = Json::encode(['output' => $output, 'message' => '']);
             }
             // return ajax json encoded response and exit
