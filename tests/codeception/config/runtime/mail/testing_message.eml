@@ -1,0 +1,25 @@
+Message-ID: <d99d36256422fcdb38fa440af6a1ff41@localhost>
+Date: Fri, 20 Feb 2015 11:07:27 +0000
+Subject: You have unassigned skills
+From: My Application robot <support@skills-mgmt.com>
+To: emp2@skills.eu
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+Hello user2 BBAACC,
+
+You have not provided yet your experience for the =
+following skills:
+ - CATEGORY4/SKILL411
+ - CATEGORY4/SKILL412
+ - CATE=
+GORY5/SKILL513
+ - CATEGORY5/SKILL514
+ - CATEGORY5/SKILL515
+
+Follow =
+the link below to fill your experience:
+
+http://localhost/home/jarek/.c=
+omposer/vendor/bin/codecept?r=3Dmy-skills%2Fgap-list
