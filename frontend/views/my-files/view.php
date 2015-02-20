@@ -15,13 +15,12 @@ $this->params['breadcrumbs'][] = ['label' => Yii::t('skills', 'My Profile'), 'ur
 $this->params['breadcrumbs'][] = $this->title;
 
 $imageTypes = ['image/png', 'image/jpeg', 'image/jpg'];
-$docTypes = ['application/msword',         
-             'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];        
-$presentationTypes = ['application/vnd.ms-powerpoint', 
-                      'application/vnd.openxmlformats-officedocument.presentationml.slideshow', 
-                      'application/vnd.openxmlformats-officedocument.presentationml.presentation'];
-$acceptableFileTypes = ArrayHelper::merge($imageTypes, $presentationTypes, $docTypes);        
-
+$docTypes = ['application/msword',
+    'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+$presentationTypes = ['application/vnd.ms-powerpoint',
+    'application/vnd.openxmlformats-officedocument.presentationml.slideshow',
+    'application/vnd.openxmlformats-officedocument.presentationml.presentation'];
+$acceptableFileTypes = ArrayHelper::merge($imageTypes, $presentationTypes, $docTypes);
 ?>
 <div class="my-files-view">
     <h1><?= Html::encode($this->title); ?></h1>
@@ -31,10 +30,15 @@ $acceptableFileTypes = ArrayHelper::merge($imageTypes, $presentationTypes, $docT
         'showOnEmpty' => false,
         'responsive' => true,
         'hover' => true,
+        'condensed' => true,
+        'floatHeader' => true,
+        'showFooter' => false,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
             'filename',
-            ['label' => Yii::t('skills', 'Size'), 'value' => function($model) { return Enum::formatBytes($model->length);}],
+            ['label' => Yii::t('skills', 'Size'), 'value' => function($model) {
+                    return Enum::formatBytes($model->length);
+                }],
             [
                 'class' => 'yii\grid\ActionColumn',
                 'template' => '{view} {delete}',
@@ -49,14 +53,22 @@ $acceptableFileTypes = ArrayHelper::merge($imageTypes, $presentationTypes, $docT
                         ]);
                     }]
                     ]
+                ],
+                'panel' => [
+                    'heading' => '<h3 class="panel-title"><i class="glyphicon glyphicon-th-list"></i> ' . $this->title . ' </h3>',
+                    'type' => 'info',
+                    'before' => FALSE,
+                    'showFooter' => false
                 ]
             ]);
             ?>
             <div>
                 <h3><?= Yii::t('skills', 'Choose file to upload'); ?></h3>
-                <?php if ($uploadDisabled) {
+                <?php
+                if ($uploadDisabled) {
                     echo '<div class="alert alert-warning">' . Yii::t('skills', 'Upload of up to 3 files available. Please delete one to upload another.') . '</div>';
-                } ?>
+                }
+                ?>
                 <?php
                 $form = ActiveForm::begin(['action' => Yii::$app->urlManager->createUrl(['my-files/upload']), 'method' => 'post', 'options' => ['enctype' => 'multipart/form-data']]);
                 echo $form->field($model, 'file')->widget(FileInput::classname(), [
