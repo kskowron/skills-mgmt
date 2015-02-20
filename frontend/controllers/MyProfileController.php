@@ -14,7 +14,17 @@ use yii\web\NotFoundHttpException;
  */
 class MyProfileController extends Controller
 {
+    /** Logged user id */
+    protected $user_id;
 
+    /**
+     * @inheritdoc
+     */
+    public function init()
+    {
+        parent::init();
+        $this->user_id = \Yii::$app->user->id;
+    }
 
     /**
      * @inheritdoc
@@ -24,10 +34,10 @@ class MyProfileController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['create','update','delete','view'],
+                'only' => ['create', 'update', 'delete', 'view'],
                 'rules' => [
                     [
-                        'actions' => ['create','update','delete','view'],
+                        'actions' => ['create', 'update', 'delete', 'view'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -49,16 +59,20 @@ class MyProfileController extends Controller
      */
     public function actionView()
     {
-        if (($model = Employee::findOne(['user_id'=>\Yii::$app->user->id])) == NULL) {
+        if (($model = Employee::findOne(['user_id' => \Yii::$app->user->id])) == NULL) {
             $model = new Employee();
         };
-        if ($model->load(Yii::$app->request->post())){
+        
+        if ($model->load(Yii::$app->request->post())) {
             $model->user_id = \Yii::$app->user->id;
-            if($model->save()){
+            if ($model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);
             }
-        }
-        return $this->render('view', ['model' => $model]);
+        } 
+        return $this->render('view', [
+                'model' => $model,
+                'businessProfiles'=>$model->getEmployeeBusinessProfiles()->orderBy('profile_order')->all()
+            ]);
     }
 
     /**
@@ -73,7 +87,8 @@ class MyProfileController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
-            return $this->render('create',              [
+            return $this->render('create',
+                    [
                     'model' => $model,
             ]);
         }

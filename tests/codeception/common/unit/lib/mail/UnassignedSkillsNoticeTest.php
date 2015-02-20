@@ -8,7 +8,7 @@ use tests\codeception\common\fixtures\EmployeeSkillFixture;
 use tests\codeception\common\fixtures\SkillFixture;
 use tests\codeception\common\fixtures\SkillLevelFixture;
 use tests\codeception\common\fixtures\UserFixture;
-use tests\codeception\console\unit\DbTestCase;
+use tests\codeception\common\unit\DbTestCase;
 use Yii;
 
 /**
@@ -49,25 +49,22 @@ class UnassignedSkillsNoticeTest extends DbTestCase
         ];
     }
 
+    private function getMessageFile()
+    {
+        return Yii::getAlias(Yii::$app->mailer->fileTransportPath) . '/testing_message.eml';
+    }
+
     /**
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
     protected function setUp()
     {
-        $this->mockApplication();
-        $this->unloadFixtures();
-        $this->loadFixtures();
-
+        parent::setUp();
         Yii::$app->mailer->fileTransportCallback = function ($mailer, $message) {
             return 'testing_message.eml';
         };
 
-    }
-    
-    private function getMessageFile()
-    {
-        return Yii::getAlias(Yii::$app->mailer->fileTransportPath) . '/testing_message.eml';
     }
 
     /**
@@ -76,7 +73,7 @@ class UnassignedSkillsNoticeTest extends DbTestCase
      */
     protected function tearDown()
     {
-        $this->destroyApplication();
+        parent::tearDown();
         @unlink($this->getMessageFile());
     }
 

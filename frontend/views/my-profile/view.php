@@ -2,13 +2,15 @@
 
 use common\models\Location;
 use kartik\detail\DetailView;
+use kartik\grid\GridView;
 use kartik\helpers\Html as Html2;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
-/* @var View $this */
-/* @var Employee $model */
+/* @var $this View */
+/* @var $model common\models\Employee */
+/* @var $businessProfiles \common\models\EmployeeBusinessProfile[] */
 
 if ($model->id == NULL) {
     $this->title = Yii::t('skills', 'Create your own profile');
@@ -16,6 +18,7 @@ if ($model->id == NULL) {
     $this->title = Yii::t('skills', 'My profile view');
 }
 $this->params['breadcrumbs'][] = $this->title;
+
 ?>
 
 <div class="employee-view">
@@ -54,27 +57,49 @@ $this->params['breadcrumbs'][] = $this->title;
                         ],
                         'inputWidth' => '40%'
                     ],
+                    [
+                        'attribute'=> 'primaryBusinessProfile',
+                        'displayOnly'=>true
+                    ],
+                    [
+                        'attribute'=> 'secondaryBusinessProfiles',
+                        'displayOnly'=>true
+                    ]
                 ],
-//        'deleteOptions' => [
-//            'url' => ['delete', 'id' => $model->id],
-//            'data' => [
-//                'confirm' => Yii::t('skills',
-//                    'Are you sure you want to delete this item?'),
-//                'method' => 'post',
-//            ],
-//        ],
                 'enableEditMode' => true,
             ])
             ?>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-3">
+        </div>
+        <div class="col-lg-9">
+<?php
 
+?>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-3">
+        </div>
+        <div class="col-lg-3">
+            <?= Html2::a(Yii::t('skills',
+                    'Edit My Skills'), ['my-skills/list'],
+                ['class' => 'btn btn-primary btn-block'])
+            ?>
+        </div>
+        <div class="col-lg-3">
+            <?= Html2::a(Yii::t('skills',
+                    'Edit Business Profile'), ['my-business-profile/index'],
+                ['class' => 'btn btn-primary btn-block'])
+            ?>
+        </div>
+        <div class="col-lg-3">
         </div>
     </div>
     <div class="row">
         <div class="col-lg-4">
-            <?= Html2::a(Yii::t('skills',
-                    'My Skills'), ['my-skills/list'],
-                ['class' => 'btn btn-primary btn-block'])
-            ?>
         </div>
         <div class="col-lg-4">
         </div>

@@ -23,7 +23,6 @@ class EmployeeSearchTest extends DbTestCase
         return [
             'user' => [
                 'class' => EmployeeFixture::className(),
-                'dataFile' => '@tests/codeception/common/fixtures/data/employee.php'
             ],
         ];
     }
@@ -34,9 +33,7 @@ class EmployeeSearchTest extends DbTestCase
      */
     protected function setUp()
     {
-        $this->mockApplication();
-        $this->unloadFixtures();
-        $this->loadFixtures();
+        parent::setUp();
         $this->object = new EmployeeSearch;
     }
 
@@ -46,7 +43,7 @@ class EmployeeSearchTest extends DbTestCase
      */
     protected function tearDown()
     {
-        $this->destroyApplication();
+        parent::tearDown();
     }
 
     /**

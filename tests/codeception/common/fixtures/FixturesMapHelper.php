@@ -26,6 +26,12 @@ class FixturesMapHelper
             'category' => [
                 'class' => CategoryFixture::className(),
             ],
+            'businessProfile' => [
+                'class' => BusinessProfileFixture::className(),
+            ],
+            'employeeBusinessProfile' => [
+                'class' => EmployeeBusinessProfileFixture::className(),
+            ],
             'skillLevel' => [
                 'class' => SkillLevelFixture::className(),
             ],

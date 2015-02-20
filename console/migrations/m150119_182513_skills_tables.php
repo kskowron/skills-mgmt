@@ -102,10 +102,12 @@ class m150119_182513_skills_tables extends Migration
             $this->addForeignKey('F_employee_skill2employee', '{{%employee_skill}}',
                 'employee_id', '{{%employee}}', 'id', 'RESTRICT', 'RESTRICT');
 
-
-                        $this->createTable('{{%business_profile}}', [
+            $this->createTable('{{%business_profile}}', [
                 'id' => Schema::TYPE_PK,
-                'name' => Schema::TYPE_STRING.'(45) NOT NULL'
+                'name' => Schema::TYPE_STRING.'(45) NOT NULL',
+                'description' => Schema::TYPE_TEXT,
+                'created_at' => Schema::TYPE_INTEGER.' NOT NULL',
+                'updated_at' => Schema::TYPE_INTEGER.' NOT NULL',
                 ], $tableOptions
             );
             $this->createIndex('I_business_profile', '{{%business_profile}}', 'name', true);
@@ -114,7 +116,9 @@ class m150119_182513_skills_tables extends Migration
                 'id' => Schema::TYPE_PK,
                 'business_profile_id' => Schema::TYPE_INTEGER.' NOT NULL',
                 'employee_id' => Schema::TYPE_INTEGER.' NOT NULL',
-                'profile_order' => Schema::TYPE_STRING.'(1) NOT NULL'
+                'profile_order' => Schema::TYPE_INTEGER.' NOT NULL',
+                'created_at' => Schema::TYPE_INTEGER.' NOT NULL',
+                'updated_at' => Schema::TYPE_INTEGER.' NOT NULL',
             ], $tableOptions);
 
             $this->addForeignKey('F_employee_busines_profile2profile', '{{%employee_business_profile}}',

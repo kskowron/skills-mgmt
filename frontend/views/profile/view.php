@@ -15,14 +15,6 @@ use yii\widgets\Pjax;
 $this->title = Yii::t('skills', 'Employee\'s profile');
 $this->params['breadcrumbs'][] = $this->title;
 
-
-$businessProfiles = array();
-if ($employee->employeeBusinessProfiles !== NULL) {
-    /* @var $value EmployeeBusinessProfile */
-    foreach ($employee->getEmployeeBusinessProfiles()->orderBy('profile_order')->all() as $key => $value) {
-        array_push($businessProfiles, Html::encode($value->businessProfile->name));
-    }
-}
 ?>
 
 <div class="profile-view">
@@ -43,15 +35,16 @@ if ($employee->employeeBusinessProfiles !== NULL) {
                     'firstName',
                     'lastName',
                     [
-                        'attribute' => 'id',
-                        'label' => Yii::t('skills', 'Business profile'),
-                        'value' => implode(', ', $businessProfiles),
-                        'format' => 'raw'
+                        'attribute' => 'locationName',
                     ],
-                    ['attribute' => 'location_id',
-                        'label' => Yii::t('skills', 'Location'),
-                        'format' => 'raw',
-                        'value' => Html::encode($employee->getLocationName()),],
+                    [
+                        'attribute'=> 'primaryBusinessProfile',
+                        'displayOnly'=>true
+                    ],
+                    [
+                        'attribute'=> 'secondaryBusinessProfiles',
+                        'displayOnly'=>true
+                    ]
                 ]
             ]);
             ?>
