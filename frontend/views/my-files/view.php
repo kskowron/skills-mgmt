@@ -5,6 +5,7 @@ use kartik\grid\GridView;
 use kartik\helpers\Enum;
 use kartik\helpers\Html;
 use kartik\widgets\FileInput;
+use yii\bootstrap\Modal;
 use yii\helpers\ArrayHelper;
 use yii\web\View;
 
@@ -22,17 +23,27 @@ $presentationTypes = ['application/vnd.ms-powerpoint',
     'application/vnd.openxmlformats-officedocument.presentationml.presentation'];
 $acceptableFileTypes = ArrayHelper::merge($imageTypes, $presentationTypes, $docTypes);
 ?>
+
 <div class="my-files-view">
     <h1><?= Html::encode($this->title); ?></h1>
+    <div class="alert alert-info alert-info" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <ul>
+            <li><?= Yii::t('skills', 'You may upload up to 3 files: onepager (PowerPoint file), CV (Word file) and image file.') ?></li>
+            <li><?= Yii::t('skills', 'Image will be used as your professional photo in this service.') ?></li>
+            <li><?= Yii::t('skills', 'If you upload 3 files the Add button will be disabled until you delete one file.') ?></li>
+        </ul>
+    </div>    
     <?php
     echo GridView::widget([
         'dataProvider' => $dataProvider,
-        'showOnEmpty' => false,
+        'showOnEmpty' => TRUE,
         'responsive' => true,
         'hover' => true,
         'condensed' => true,
         'floatHeader' => true,
         'showFooter' => false,
+        'toolbar' => FALSE,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
             'filename',
@@ -57,28 +68,26 @@ $acceptableFileTypes = ArrayHelper::merge($imageTypes, $presentationTypes, $docT
                 'panel' => [
                     'heading' => '<h3 class="panel-title"><i class="glyphicon glyphicon-th-list"></i> ' . $this->title . ' </h3>',
                     'type' => 'info',
-                    'before' => FALSE,
-                    'showFooter' => false
+                    'before' => Html::button(Html::icon('plus') . 'Add', ['data-toggle' => 'modal',
+                        'class' => $uploadDisabled ? 'btn' : 'btn btn-success',
+                        'disabled' => $uploadDisabled ? 'disabled' : NULL,
+                        'data-target' => '#w3',
+                    ]),
+                    'after' => false,
+                    'showFooter' => FALSE
                 ]
             ]);
+            Modal::begin([
+                'header' => Yii::t('skills', 'Upload a file'),
+            ]);
+            $form = ActiveForm::begin(['action' => Yii::$app->urlManager->createUrl(['my-files/upload']), 'method' => 'post', 'options' => ['enctype' => 'multipart/form-data']]);
+            echo $form->field($model, 'file')->widget(FileInput::classname(), [
+                'options' => ['accept' => implode(',', $acceptableFileTypes)],
+                'disabled' => $uploadDisabled,
+                'pluginOptions' => ['allowedFileExtensions' => ['jpg', 'png', 'jpeg', 'doc', 'docx', 'ppt', 'pptx'],]
+            ]);
+            ActiveForm::end();
+            Modal::end();
             ?>
-            <div>
-                <h3><?= Yii::t('skills', 'Choose file to upload'); ?></h3>
-                <?php
-                if ($uploadDisabled) {
-                    echo '<div class="alert alert-warning">' . Yii::t('skills', 'Upload of up to 3 files available. Please delete one to upload another.') . '</div>';
-                }
-                ?>
-                <?php
-                $form = ActiveForm::begin(['action' => Yii::$app->urlManager->createUrl(['my-files/upload']), 'method' => 'post', 'options' => ['enctype' => 'multipart/form-data']]);
-                echo $form->field($model, 'file')->widget(FileInput::classname(), [
-                    'options' => ['accept' => implode(',', $acceptableFileTypes)],
-                    'disabled' => $uploadDisabled,
-                    'pluginOptions' => ['allowedFileExtensions' => ['jpg', 'png', 'jpeg', 'doc', 'docx', 'ppt', 'pptx'],]
-                ]);
-                ActiveForm::end();
-                ?>
-    </div>
-
 
 </div>
