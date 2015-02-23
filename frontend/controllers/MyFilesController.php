@@ -87,7 +87,7 @@ class MyFilesController extends Controller {
             $model->description = 'This is my description';
             $model->owner = Yii::$app->user->id;
             $model->file = $file;
-
+            
             if ($model->save()) {
                 FlashHelper::setFlashSuccess(Yii::t('skills', 'File uploaded.'));
             } else {

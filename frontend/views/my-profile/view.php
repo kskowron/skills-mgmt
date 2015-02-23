@@ -19,6 +19,11 @@ if ($model->id == NULL) {
 }
 $this->params['breadcrumbs'][] = $this->title;
 
+$files = [];
+foreach ($model->getAllFiles() as $file) {
+    array_push($files, Html::a($file->filename, ['my-files/get', 'fileId' => (string)$file->_id]));
+}
+$links = implode(', ', $files);
 ?>
 
 <div class="employee-view">
@@ -27,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
     <div class="row">
         <div class="col-md-3">
-            <?= Html::img(Url::base(true) . '/img/person-placeholder.jpg', ['class' => 'img-thumbnail img-responsive']); ?>
+            <?= common\lib\util\ImageHelper::businessPhoto($model); ?>
         </div>
         <div class="col-md-9">
             <?=
@@ -64,6 +69,11 @@ $this->params['breadcrumbs'][] = $this->title;
                     [
                         'attribute'=> 'secondaryBusinessProfiles',
                         'displayOnly'=>true
+                    ],
+                    [
+                        'label' => Yii::t('skills', 'Files'), 
+                        'value' => $links, 
+                        'format' => 'raw'
                     ]
                 ],
                 'enableEditMode' => true,
@@ -96,7 +106,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ?>
         </div>
         <div class="col-lg-3">
-            <?= Html2::a(Yii::t('skills', 'My Files'), ['my-files/view'],
+            <?= Html2::a(Yii::t('skills', 'Edit My Files'), ['my-files/view'],
                 ['class' => 'btn btn-primary btn-block'])
             ?>            
         </div>

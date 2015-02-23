@@ -3,6 +3,7 @@
 namespace common\models;
 
 use yii\behaviors\TimestampBehavior;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "employee".
@@ -30,7 +31,7 @@ class Employee extends \common\models\base\Employee
 
     public function attributeLabels()
     {
-        return \yii\helpers\ArrayHelper::merge(parent::attributeLabels(),
+        return ArrayHelper::merge(parent::attributeLabels(),
             [
                 'primaryBusinessProfile'=>  \Yii::t('skills','Primary Profile'),
                 'secondaryBusinessProfiles'=>  \Yii::t('skills','Secondary Profiles'),
@@ -105,4 +106,32 @@ class Employee extends \common\models\base\Employee
         }
         return null;
     }
+
+    /**
+     * Gets set of employee's document - i.e. files but image type file
+     * @return array 
+     */
+    public function getDocuments() {
+        $notImage = new \MongoRegex('/^image/');
+        return EmployeeFile::find()->where(['contentType' => ['$not' => $notImage]])->andWhere(['owner' => $this->user_id])->all();
+
+    }
+
+    /**
+     * Gets full set of employee's files
+     * @return array 
+     */    
+    public function getAllFiles() {
+        return EmployeeFile::find()->where(['owner' => (int)$this->user_id])->all();
+    }
+    
+    /**
+     * Get employee's business photo
+     * @return type
+     */
+    public function getPhoto() {
+        $imageContentType = new \MongoRegex('/^image/');
+        return ArrayHelper::getValue(EmployeeFile::find()->where(['contentType' => $imageContentType])->andWhere(['owner' => $this->user_id])->all(), (int) 0, NULL);
+    }
+            
 }

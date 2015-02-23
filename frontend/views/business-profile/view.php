@@ -60,7 +60,8 @@ $this->params['breadcrumbs'][] = $this->title;
                     'sorter' => ['attributes' => ['firstName', 'lastName']],
                     'itemView' => function($model, $key, $index, $widget) {
                         $content = '<div class="thumbnail">';
-                        $content .= Html::img(Url::base(true) . '/img/person-placeholder.jpg');
+                        //$content .= Html::img(Url::base(true) . '/img/person-placeholder.jpg');
+                        $content = common\lib\util\ImageHelper::businessPhoto($model);
                         $content .= '<div class="caption">'; 
                         $content .= '<h3>'. $model->firstName . ' ' . $model->lastName . '</h3>';
                         $content .= '<p>' . $model->location->name . '</p>';

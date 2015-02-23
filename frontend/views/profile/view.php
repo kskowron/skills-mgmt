@@ -1,5 +1,6 @@
 <?php
 
+use common\lib\util\ImageHelper;
 use common\models\Employee;
 use common\models\EmployeeBusinessProfile;
 use kartik\detail\DetailView;
@@ -15,6 +16,12 @@ use yii\widgets\Pjax;
 $this->title = Yii::t('skills', 'Employee\'s profile');
 $this->params['breadcrumbs'][] = $this->title;
 
+$files = [];
+foreach ($employee->getDocuments() as $file) {
+    array_push($files, Html::a($file->filename, ['employee-files/get', 'fileId' => (string)$file->_id]));
+}
+$links = implode(', ', $files);
+
 ?>
 
 <div class="profile-view">
@@ -23,7 +30,9 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
     <div class="row">
         <div class="col-md-3">
-            <?= Html::img(Url::base(true) . '/img/person-placeholder.jpg', ['class' => 'img-thumbnail img-responsive']); ?>
+            <?php 
+                echo ImageHelper::businessPhoto($employee); 
+            ?>
         </div>
         <div class="col-md-9">
             <?php
@@ -44,6 +53,12 @@ $this->params['breadcrumbs'][] = $this->title;
                     [
                         'attribute'=> 'secondaryBusinessProfiles',
                         'displayOnly'=>true
+                    ],
+                    [
+                        'label' => Yii::t('skills', 'Files'),
+                        'value' => $links,
+                        'format' => 'raw',
+                        'displayOnly' => true,
                     ]
                 ]
             ]);
