@@ -35,6 +35,11 @@ $this->params['breadcrumbs'][] = $this->title;
                     'firstName',
                     'lastName',
                     [
+                      'label'=>'email',
+                      'value'=>$employee->user->email,
+                      'format'=>'email',
+                    ],
+                    [
                         'attribute' => 'locationName',
                     ],
                     [

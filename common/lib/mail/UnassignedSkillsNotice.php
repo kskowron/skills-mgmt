@@ -25,7 +25,11 @@ class UnassignedSkillsNotice extends Object
     public $textonly    = false;
     public $employee_id = null;
     protected $employee = null;
+
     protected $skills   = [];
+    protected $primaryProfile = null;
+    protected $secondaryProfile = null;
+
 
     public function init()
     {
@@ -34,6 +38,8 @@ class UnassignedSkillsNotice extends Object
         if ($this->employee !== null) {
             $skills       = new SkillSearch();
             $this->skills = $skills->getUnassignedSkillsQuery($this->employee->id)->all();
+            $this->primaryProfile = $this->employee->primaryBusinessProfile;
+            $this->secondaryProfile = $this->employee->secondaryBusinessProfiles;
         }
     }
 
@@ -57,6 +63,18 @@ class UnassignedSkillsNotice extends Object
         return count($this->skills);
     }
 
+    public function isSkillsAssigned(){
+        return !(bool)($this->getCountUnassignedSkills()>0);
+    }
+    
+    public function isPrimaryProfileDefined(){
+        return !($this->primaryProfile == NULL);
+    }
+
+    public function isSecondaryProfileDefined(){
+        return !($this->secondaryProfile == NULL);
+    }
+
     /**
      * Sends an email with a link, for adding missing skills info.
      *
@@ -64,7 +82,7 @@ class UnassignedSkillsNotice extends Object
      */
     public function sendMail()
     {
-        if (!($this->getCountUnassignedSkills() > 0)) {
+        if ($this->isSkillsAssigned() && $this->isPrimaryProfileDefined() && $this->isSecondaryProfileDefined()) {
             return FALSE;
         }
 
@@ -77,7 +95,10 @@ class UnassignedSkillsNotice extends Object
             $template['text'] = 'unassignedSkills-text';
 
             $ret = \Yii::$app->mailer->compose($template,
-                    ['employee' => $this->employee, 'skills' => $this->skills])
+                    [
+                        'employee' => $this->employee,
+                        'skills' => $this->skills,
+                    ])
                 ->setFrom([\Yii::$app->params['supportEmail'] => \Yii::$app->name.' robot'])
                 ->setTo($this->employee->user->email)
                 ->setSubject('You have unassigned skills')
