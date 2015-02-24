@@ -7,8 +7,8 @@
 
 return [
     //Properties file dependencies
-    'jk\sys\IProperties' => [
-        'class' => 'jk\sys\PropertiesFile',
-        'filename' => '$HOME/.secret/skills-secret'
+    'jarekkozak\sys\IProperties' => [
+        'class' => 'jarekkozak\sys\PropertiesFile',
+        'filename' => __DIR__ .'/properties.txt'
     ],
 ];
