@@ -21,7 +21,16 @@ $docTypes = ['application/msword',
 $presentationTypes = ['application/vnd.ms-powerpoint',
     'application/vnd.openxmlformats-officedocument.presentationml.slideshow',
     'application/vnd.openxmlformats-officedocument.presentationml.presentation'];
-$acceptableFileTypes = ArrayHelper::merge($imageTypes, $presentationTypes, $docTypes);
+$allowedFileTypes = ArrayHelper::merge($presentationTypes, $docTypes);
+
+$allowedExtensions = ['doc', 'docx', 'ppt', 'pptx'];
+
+if($uploadImage) {
+    $allowedFileTypes = ArrayHelper::merge($allowedFileTypes, $imageTypes);
+    $allowedExtensions = ArrayHelper::merge($allowedExtensions, ['jpg', 'png', 'jpeg']);
+}
+
+
 ?>
 
 <div class="my-files-view">
@@ -82,9 +91,9 @@ $acceptableFileTypes = ArrayHelper::merge($imageTypes, $presentationTypes, $docT
             ]);
             $form = ActiveForm::begin(['action' => Yii::$app->urlManager->createUrl(['my-files/upload']), 'method' => 'post', 'options' => ['enctype' => 'multipart/form-data']]);
             echo $form->field($model, 'file')->widget(FileInput::classname(), [
-                'options' => ['accept' => implode(',', $acceptableFileTypes)],
+                'options' => ['accept' => implode(',', $allowedFileTypes)],
                 'disabled' => $uploadDisabled,
-                'pluginOptions' => ['allowedFileExtensions' => ['jpg', 'png', 'jpeg', 'doc', 'docx', 'ppt', 'pptx'],]
+                'pluginOptions' => ['allowedFileExtensions' => $allowedExtensions,]
             ]);
             ActiveForm::end();
             Modal::end();

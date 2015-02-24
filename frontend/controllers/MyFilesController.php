@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use common\models\Employee;
 use common\models\EmployeeFile;
 use common\models\EmployeeFileSearch;
 use jarekkozak\helpers\FlashHelper;
@@ -65,6 +66,9 @@ class MyFilesController extends Controller {
 
     public function actionView() {
         $model = new EmployeeFile();
+        $employee = Employee::findOne(['user_id' => Yii::$app->user->id]);
+        $image = $employee->getPhoto();
+        $uploadImage = ($image !== NULL) ? FALSE : TRUE;
 
         $fileSearch = new EmployeeFileSearch();
         $files = $fileSearch->searchByEmployee(['owner' => Yii::$app->user->id]);
@@ -74,7 +78,8 @@ class MyFilesController extends Controller {
 
         return $this->render('view', ['dataProvider' => $files, 
                                       'model' => $model, 
-                                      'uploadDisabled' => $uploadDisabled]);
+                                      'uploadDisabled' => $uploadDisabled,
+                                      'uploadImage' => $uploadImage]);
     }
 
     public function actionUpload() {
