@@ -44,6 +44,11 @@ $links = implode(', ', $files);
                     'firstName',
                     'lastName',
                     [
+                      'label'=>'email',
+                      'value'=>$employee->user->email,
+                      'format'=>'email',
+                    ],
+                    [
                         'attribute' => 'locationName',
                     ],
                     [
