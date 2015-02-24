@@ -2,6 +2,15 @@
 
 . app.properties
 
+# Application have to be rebuild after db containers rebuild
+docker stop $APPFULLCONT
+docker stop $APPCONSOLECONT
+
+#remove containers
+docker rm -f $APPFULLCONT
+docker rm -f $APPCONSOLECONT
+
+
 echo "MongoDB Removing old containers and images....."
 #stop containers if running
 docker stop $MONGOCONT
