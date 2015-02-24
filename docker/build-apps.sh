@@ -15,7 +15,6 @@ docker rmi -f jarek/apache_full
 echo "Removing old containers and images..DONE!"
 
 #build images
-
 rm apache_full/tmp/app.tar
 tar -cf apache_full/tmp/app.tar -C $SOURCE common  \
 		frontend \
@@ -30,7 +29,17 @@ tar -cf apache_full/tmp/app.tar -C $SOURCE common  \
 
 docker build -t jarek/apache_full apache_full
 
-echo Please rebuild console application: ./build-console.sh
+#build console app
+#You can customize it e.g. include console dir 
+
+
+echo "Starting database containers...."
+. start-db.sh
+
+echo "Starting application containers..."
 echo You can stop/start container using command: docker start/stop $APPFULLCONT
 docker run -d -p 127.0.0.1:80:80 --name $APPFULLCONT --link $MYSQLCONT:$MYSQLCONT --link $MONGOCONT:$MONGOCONT jarek/apache_full
 
+echo Now you can have an acess to the console typing `docker exec -it $APPCONSOLECONT /bin/bash`
+echo Please run ./yii migrate after container is started...
+docker run -d --name $APPCONSOLECONT --link $MYSQLCONT:$MYSQLCONT --link $MONGOCONT:$MONGOCONT jarek/apache_full /bin/bash

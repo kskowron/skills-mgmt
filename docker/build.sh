@@ -8,10 +8,8 @@ echo "Build MongoDB.................................."
 . build-mongo.sh
 echo "Build Apache base.............................."
 . build-apache.sh
-echo "Build Apache full.............................."
-. build-full.sh
-echo "Build console application......................"
-. build-console.sh
+echo "Build Application containers..................."
+. build-apps.sh
 
 echo "Created images................................."
 docker images 

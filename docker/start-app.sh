@@ -2,7 +2,9 @@
 
 . app.properties
 echo "Start application"
-docker start $MONGOCONT 
-docker start $MYSQLCONT
+. start-db.sh
+
 docker start $APPFULLCONT
+docker start $APPCONSOLECONT
+
  

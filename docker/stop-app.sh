@@ -2,7 +2,7 @@
 
 . app.properties
 echo "Stop application"
-docker stop $MONGOCONT 
-docker stop $MYSQLCONT
+docker stop $APPCONSOLECONT
 docker stop $APPFULLCONT
- 
+. stop-db.sh
+
