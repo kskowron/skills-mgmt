@@ -34,8 +34,6 @@ AppAsset::register($this);
             ]);
             //Menu po lewej stronie
             $menuItems = [
-                ['label' => 'Backend', 'url' => \yii\helpers\Url::to('backend/web',
-                        TRUE)],
             ];
             echo Nav::widget([
                 'options' => ['class' => 'navbar-nav navbar-left'],

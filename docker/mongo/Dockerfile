@@ -21,8 +21,14 @@ VOLUME ["/data/db"]
 # Define working directory.
 WORKDIR /data
 
+# create users in mongo db
+COPY ./create_users.sh /create_users.sh
+COPY ./template.js /template.js
+RUN chmod 755 /create_users.sh
+
+
 # Define default command.
-CMD ["mongod"]
+CMD ["mongod","--auth"]
 
 # Expose ports.
 #   - 27017: process

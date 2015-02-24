@@ -3,9 +3,8 @@
 use common\models\Location;
 use kartik\detail\DetailView;
 use kartik\grid\GridView;
-use kartik\helpers\Html as Html2;
+use kartik\helpers\Html;
 use yii\helpers\ArrayHelper;
-use yii\helpers\Html;
 use yii\helpers\Url;
 
 /* @var $this View */
@@ -94,21 +93,21 @@ $links = implode(', ', $files);
         <div class="col-lg-3">
         </div>
         <div class="col-lg-3">
-            <?= Html2::a(Yii::t('skills',
+            <?= $model->id==NULL?'':Html::a(Yii::t('skills',
                     'Edit My Skills'), ['my-skills/list'],
                 ['class' => 'btn btn-primary btn-block'])
             ?>
         </div>
         <div class="col-lg-3">
-            <?= Html2::a(Yii::t('skills',
+            <?= $model->id==NULL?'':Html::a(Yii::t('skills',
                     'Edit Business Profile'), ['my-business-profile/index'],
                 ['class' => 'btn btn-primary btn-block'])
             ?>
         </div>
         <div class="col-lg-3">
-            <?= Html2::a(Yii::t('skills', 'Edit My Files'), ['my-files/view'],
+            <?= $model->id==NULL?'':Html::a(Yii::t('skills', 'My Files'), ['my-files/view'],
                 ['class' => 'btn btn-primary btn-block'])
-            ?>            
+            ?>
         </div>
     </div>
 </div>
