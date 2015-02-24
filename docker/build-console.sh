@@ -7,12 +7,11 @@ echo "Removing old console containers....."
 docker stop $APPCONSOLECONT
 #remove containers
 docker rm -f $APPCONSOLECONT
-#remove images
-docker rmi -f jarek/apache_full
+
 echo "Removing old console containers..DONE!"
 
 echo Now you can have an acess to the console typing `docker start $APPCONSOLECONT`
-
+echo Please run ./yii migrate after container is started...
 docker run -it --name $APPCONSOLECONT --link $MYSQLCONT:$MYSQLCONT --link $MONGOCONT:$MONGOCONT jarek/apache_full /bin/bash
 
 

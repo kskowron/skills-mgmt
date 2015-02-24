@@ -27,11 +27,13 @@ class EmployeeBusinessProfileSearch extends EmployeeBusinessProfile
 
     public function search($params, $employee_id = null)
     {
+
+
         $query = EmployeeBusinessProfile::find();
 
         if ($employee_id != NULL) {
             $query->andFilterWhere([
-                'employee_id' => $this->employee_id,
+                'employee_id' => $employee_id,
             ])->orderBy('profile_order');
         }
 
@@ -46,7 +48,6 @@ class EmployeeBusinessProfileSearch extends EmployeeBusinessProfile
         $query->andFilterWhere([
             'id' => $this->id,
             'business_profile_id' => $this->business_profile_id,
-            'employee_id' => $this->employee_id,
             'profile_order' => $this->profile_order
         ]);
         return $dataProvider;
