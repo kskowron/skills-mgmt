@@ -2,7 +2,9 @@
 
 . app.properties
 
-echo "Removing old containers and images....."
+echo "Please ensure that database containers are up and running..."
+echo "Removing old containers and images..."
+
 #stop containers if running
 docker stop $APPFULLCONT
 docker stop $APPCONSOLECONT
@@ -32,13 +34,9 @@ docker build -t jarek/apache_full apache_full
 #build console app
 #You can customize it e.g. include console dir 
 
-
-echo "Starting database containers...."
-. start-db.sh
-
 echo "Starting application containers..."
 echo You can stop/start container using command: docker start/stop $APPFULLCONT
-docker run -d -p 127.0.0.1:80:80 --name $APPFULLCONT --link $MYSQLCONT:$MYSQLCONT --link $MONGOCONT:$MONGOCONT jarek/apache_full
+docker run -d -p $IP_APACHE:80 --name $APPFULLCONT --link $MYSQLCONT:$MYSQLCONT --link $MONGOCONT:$MONGOCONT jarek/apache_full
 
 echo Now you can have an acess to the console typing `docker exec -it $APPCONSOLECONT /bin/bash`
 echo Please run ./yii migrate after container is started...

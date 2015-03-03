@@ -15,5 +15,5 @@ echo "APACHE Removing old containers and images..DONE!"
 docker build -t jarek/apache apache
 
 #run server images
-docker run -d -p 127.0.0.1:$APACHEPORT:80 --name $APACHECONT --link $MYSQLCONT:$MYSQLCONT --link $MONGOCONT:$MONGOCONT jarek/apache
-echo Apache server is not running please build separately
+# docker run -d -p $IP_APACHE:$APACHEPORT:80 --name $APACHECONT --link $MYSQLCONT:$MYSQLCONT --link $MONGOCONT:$MONGOCONT jarek/apache
+echo Apache server is not running please build applications containers

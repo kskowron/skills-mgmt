@@ -21,12 +21,6 @@ docker rm -f create_schemas
 docker rmi -f jarek/mysqldb
 echo "MYSQL Removing old containers and images..DONE!"
 
-#create directory for data
-rm -r $DATA_DIR/$MYSQLDIR
-rm -r $DATA_DIR/$LOGDIR
-
-mkdir $DATA_DIR/$MYSQLDIR
-mkdir $DATA_DIR/$LOGDIR
 
 #build images
 echo "MYSQL Building base images and database initialization..."

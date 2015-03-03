@@ -2,6 +2,7 @@
 
 . app.properties
 
+
 echo "Build MYSQL...................................."
 . build-mysql.sh
 echo "Build MongoDB.................................."
