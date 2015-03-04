@@ -47,7 +47,7 @@ class MyBusinessProfileController extends Controller
     public function actionIndex()
     {
         $searchModel  = new EmployeeBusinessProfileSearch;
-        $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams(),$this->employee_id);
+        $dataProvider = $searchModel->employeeProfilesSearch($this->employee_id);
 
         return $this->render('index',
                 [
