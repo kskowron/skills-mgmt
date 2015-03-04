@@ -24,11 +24,17 @@ class UserOutlook extends User
     {
         if ($this->outlookLogin) {
             try {
-                /* @var $outlook jk\outlook\Outlook */
+                /* @var $outlook jarekkozak\outlook\Outlook */
                 $outlook = \Yii::$container->get('jarekkozak\outlook\Outlook');
                 $outlook->setPassword($password);
                 $outlook->setUsername($this->email);
-                return $outlook->authenticate();
+                if($outlook->authenticate()){
+                    \Yii::$app->log->getLogger()->log($this->username . ' logged via '. $outlook->getServer(),  \yii\log\Logger::LEVEL_INFO);
+                    return TRUE;
+                }else{
+                    \Yii::$app->log->getLogger()->log($this->username . ' failed login via '. $outlook->getServer(),  \yii\log\Logger::LEVEL_WARNING);
+                    return FALSE;
+                }
             } catch (Exception $exc) {
                 \Yii::$app->log->getLogger()->log($exc,  \yii\log\Logger::LEVEL_ERROR);
             }
