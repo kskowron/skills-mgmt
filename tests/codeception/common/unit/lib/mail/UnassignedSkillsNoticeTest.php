@@ -46,6 +46,10 @@ class UnassignedSkillsNoticeTest extends DbTestCase
                 'class' => EmployeeSkillFixture::className(),
                 'dataFile' => '@tests/codeception/common/fixtures/data/employee_skill.php'
             ],
+            'employee_businessprofile' => [
+                'class' => \tests\codeception\common\fixtures\EmployeeBusinessProfileFixture::className(),
+                'dataFile' => '@tests/codeception/common/fixtures/data/employee_business_profile.php'
+            ],
         ];
     }
 
@@ -127,7 +131,7 @@ class UnassignedSkillsNoticeTest extends DbTestCase
         $needle = "CATEGORY5/SKILL515";
         $this->assertContains($needle, $message);
         
-        $needle = "<p> - CATEGORY4/SKILL411</p>";
+        $needle = "<p> - CATEGORY4/SKILL411";
         $this->assertContains($needle, $message);
 
         $needle ="<!DOCTYPE html PUBLIC";

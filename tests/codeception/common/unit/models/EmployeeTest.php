@@ -116,7 +116,7 @@ class EmployeeTest extends \tests\codeception\common\unit\DbTestCase
         $this->assertNotNull($employee = Employee::findOne(1));
         $this->assertEquals('BPROFILE1', $employee->getPrimaryBusinessProfile());
 
-        $this->assertNotNull($employee = Employee::findOne(2));
+        $this->assertNotNull($employee = Employee::findOne(3));
         $this->assertNull($employee->getPrimaryBusinessProfile());
     }
 
@@ -128,7 +128,7 @@ class EmployeeTest extends \tests\codeception\common\unit\DbTestCase
         $this->assertNotNull($employee = Employee::findOne(1));
         $this->assertEquals('BPROFILE2,BPROFILE3,', $employee->getSecondaryBusinessProfiles());
 
-        $this->assertNotNull($employee = Employee::findOne(2));
+        $this->assertNotNull($employee = Employee::findOne(3));
         $this->assertNull($employee->getSecondaryBusinessProfiles());
     }
 }

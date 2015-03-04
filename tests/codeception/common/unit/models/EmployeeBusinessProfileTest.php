@@ -123,7 +123,7 @@ class EmployeeBusinessProfileTest extends DbTestCase
     {
         $profile = EmployeeBusinessProfile::findOne(2);
         $this->assertTrue($profile->deleteProfile());
-        $all = base\EmployeeBusinessProfile::find(['employee_id'=>1])->orderBy('profile_order')->all();
+        $all = EmployeeBusinessProfile::find()->andWhere(['employee_id'=>1])->orderBy('profile_order')->all();
         $this->assertCount(2, $all);
         $profile = $all[0];
         $this->assertEquals(1, $profile->id);
