@@ -51,7 +51,7 @@ class SkillSearch extends Skill
     }
 
     /**
-     * Create query for unassigned skills
+     * Create query for unassigned skills for given employee
      * 
      * @param int $employee_id
      * @return \yii\db\Query
