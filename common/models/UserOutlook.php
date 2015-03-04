@@ -30,7 +30,7 @@ class UserOutlook extends User
                 $outlook->setUsername($this->email);
                 return $outlook->authenticate();
             } catch (Exception $exc) {
-                echo $exc->getTraceAsString();
+                \Yii::$app->log->getLogger()->log($exc,  \yii\log\Logger::LEVEL_ERROR);
             }
         }
         return parent::validatePassword($password);
