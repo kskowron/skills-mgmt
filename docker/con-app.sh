@@ -2,4 +2,4 @@
 
 . app.properties
 echo "Start app console.."
-docker exec -it $APPCONSOLECONT /bin/bash 
+docker exec -it $APPFULLCONT /bin/bash 

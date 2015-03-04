@@ -5,8 +5,10 @@
 echo "APACHE Removing old containers and images....."
 #stop containers if running
 docker stop $APACHECONT
+
 #remove containers
 docker rm -f $APACHECONT
+
 #remove images
 docker rmi -f jarek/apache
 echo "APACHE Removing old containers and images..DONE!"
