@@ -9,40 +9,22 @@ namespace frontend\models;
 
 use common\models\Employee;
 use common\models\EmployeeSkill;
-use common\models\SkillLevel;
 use Yii;
 
 /**
- * Class for searching skills of logged employee
+ * Class for searching skills of given employee
  *
- * @author jaroslaw.koza68@gmail.com
+ * @author Jarosław Kozak <jaroslaw.koza68@gmail.com>
+ * 
  */
 class MySkillsSearch extends EmployeeSkillsExtSearch
 {
-    public $loggedEmployee;
-
-    /**
-     * Search is limited only to current logged employee
-     * @param type $params
-     * @return type
-     */
-    public function search($params)
-    {
-        $this->employee_ids = $this->loggedEmployee->id;
-        return parent::search($params);
-    }
-
-    public function init()
-    {
-        parent::init();
-        $this->loggedEmployee = Employee::findOne(['user_id' => Yii::$app->user->id]);
-    }
 
     public function updateMySkill()
     {
         $model = EmployeeSkill::findOne($this->id);
 
-        if ($model->employee_id != $this->loggedEmployee->id) {
+        if ($model->employee_id != $this->employee_ids) {
             return false;
         }
 
@@ -72,27 +54,28 @@ class MySkillsSearch extends EmployeeSkillsExtSearch
     public function deleteSkill()
     {
         $model = EmployeeSkill::findOne($this->id);
-        if ($model->employee_id == $this->loggedEmployee->id) {
-            return $model->delete();
+        if ($model->employee_id == $this->employee_ids) {
+            return (bool)$model->delete();
         }
         return FALSE;
     }
 
     /**
      *
-     * @param \common\models\base\EmployeeSkill $model
+     * @param EmployeeSkill $model
      * @return boolean
      */
-    public function addNewSkill(\common\models\base\EmployeeSkill $model)
+    public function addNewSkill(EmployeeSkill $model)
     {
         if ($this->employee_ids > 0) {
-            $model->employee_id = $this->loggedEmployee->id;
+            $model->employee_id = $this->employee_ids;
             return $model->save();
         }
         return FALSE;
     }
 
     /**
+     * 
      * Method save is disabled for search
      * @return boolean
      */
