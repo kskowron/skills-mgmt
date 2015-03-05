@@ -1,7 +1,9 @@
 #!/bin/bash
 
-. app.properties
+. functions.sh
 echo "Stop application"
-docker stop $APPFULLCONT
-. stop-db.sh
+STOPFront
+STOPBack
+STOPMySQL
+STOPMongo
 

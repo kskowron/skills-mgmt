@@ -1,7 +1,7 @@
 #!/bin/bash
 
-. app.properties
+. functions.sh
 echo "Start databases..."
-docker start $MONGOCONT 
-docker start $MYSQLCONT
+STARTMongo()
+STARTMySQL()
  

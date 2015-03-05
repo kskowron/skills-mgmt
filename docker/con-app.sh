@@ -1,5 +1,5 @@
 #!/bin/bash
 
-. app.properties
+. functions.sh
 echo "Start app console.."
-docker exec -it $APPFULLCONT /bin/bash 
+RUNConsole

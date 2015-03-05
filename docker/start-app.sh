@@ -1,10 +1,8 @@
 #!/bin/bash
-
-. app.properties
-
+. functions.sh
 echo "Start application"
-. start-db.sh
-
-docker start $APPFULLCONT
-
+STARTMySQL
+STARTMongo
+STARTFront
+STARTBack
  
