@@ -121,11 +121,13 @@ class EmployeeBusinessProfile extends \common\models\base\EmployeeBusinessProfil
 
     public function beforeSave($insert)
     {
-        if ($insert && $this->profile_order == NULL) {
+        if ($insert) {
             if (($employee = Employee::findOne($this->employee_id)) !== NULL) {
                 $this->profile_order =
                     $employee->getEmployeeBusinessProfiles()->count() + 1;
-            };
+            }else{
+                $this->profile_order = 1;
+            }
         }
         return parent::beforeSave($insert);
     }
