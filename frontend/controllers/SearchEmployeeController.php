@@ -2,10 +2,10 @@
 
 namespace frontend\controllers;
 
+use common\lib\util\SkillsHelper;
 use frontend\models\EmployeeSearchExt;
 use frontend\models\SearchBySkillsForm;
 use frontend\models\SkillSearchExt;
-use common\lib\util\SkillsHelper;
 use Yii;
 use yii\filters\AccessControl;
 use yii\helpers\ArrayHelper;
@@ -20,10 +20,8 @@ class SearchEmployeeController extends Controller {
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['by-skill','all-employees'],
                 'rules' => [
                     [
-                        'actions' => ['by-skill','all-employees'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
