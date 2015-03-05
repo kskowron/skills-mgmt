@@ -57,17 +57,18 @@ class EmployeeBusinessProfileSearch extends EmployeeBusinessProfile
      * @param int $employee_id
      * @return ActiveDataProvider
      */
-    public function employeeProfilesSearch($employee_id)
+    public function search4employee($employee_id)
     {
         $query = EmployeeBusinessProfile::find();
-
-        $query->andFilterWhere([
-            'employee_id' => $employee_id,
-        ])->orderBy('profile_order');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
+
+        $query->andFilterWhere([
+            'employee_id' => (int)$employee_id,
+        ])->orderBy('profile_order');
+
         return $dataProvider;
     }
 }
