@@ -20,10 +20,8 @@ class MyFilesController extends Controller {
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['delete','get','upload','view'],
                 'rules' => [
                     [
-                        'actions' => ['delete','get','upload','view'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
