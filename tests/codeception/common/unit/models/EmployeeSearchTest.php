@@ -47,42 +47,6 @@ class EmployeeSearchTest extends DbTestCase
     }
 
     /**
-     * @covers common\models\EmployeeSearch::rules
-     * @todo   Implement testRules().
-     */
-    public function testRules()
-    {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
-    }
-
-    /**
-     * @covers common\models\EmployeeSearch::scenarios
-     * @todo   Implement testScenarios().
-     */
-    public function testScenarios()
-    {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
-    }
-
-    /**
-     * @covers common\models\EmployeeSearch::search
-     * @todo   Implement testSearch().
-     */
-    public function testSearch()
-    {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
-    }
-
-    /**
      * @covers common\models\EmployeeSearch::getEmployeeList
      */
     public function testGetEmployeeList()

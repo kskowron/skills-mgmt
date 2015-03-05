@@ -82,13 +82,26 @@ class EmployeeBusinessProfileSearchTest extends DbTestCase
      */
     public function testEmployeeProfilesSearch()
     {
-        $data  = $this->object->employeeProfilesSearch(1);
+        $data  = $this->object->search4employee(1);
         $this->assertCount(3, $data->models);
 
-        $data  = $this->object->employeeProfilesSearch(2);
+        $data  = $this->object->search4employee(2);
         $this->assertCount(2, $data->models);
 
-        $data  = $this->object->employeeProfilesSearch(3);
+        $data  = $this->object->search4employee(3);
         $this->assertCount(0, $data->models);
     }
+
+    /**
+     * @covers common\models\EmployeeBusinessProfileSearch::employeeProfilesSearch
+     */
+    public function testEmployeeProfilesSearchNull()
+    {
+        $data  = $this->object->search4employee(NULL);
+        $this->assertCount(0, $data->models);
+        $data  = $this->object->search4employee('');
+        $this->assertCount(0, $data->models);
+
+    }
+
 }

@@ -10,6 +10,8 @@ $loginPage = LoginPage::openBy($I);
 $loginPage->login('emp1', 'test123');
 $I->seeLink('Logout (emp1)');
 
+$profilePage = tests\codeception\frontend\_pages\MyProfilePage::openBy($I);
+
 $I->see('Edit Business Profile', 'a');
 $I->click('Edit Business Profile');
 
