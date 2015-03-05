@@ -108,7 +108,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     ]);},
                 'delete' => function ($url, $model) {
                     return Html::a(Html::icon('trash'),
-                            Yii::$app->urlManager->createUrl(['myskills/delete-skill','id' => $model->id,'delete'=>'t']),
+                            Yii::$app->urlManager->createUrl(['my-skills/delete-skill','id' => $model->id,'delete'=>'t']),
                             [ 'title' => Yii::t('yii', 'Delete Skill'),
                              'data-method' => 'post',
                              'data-confirm' => Yii::t('skills', 'Do you really want to delete this skill?')
