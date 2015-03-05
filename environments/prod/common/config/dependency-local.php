@@ -6,7 +6,6 @@
  */
 
 return [
-    //Properties file dependencies
     'jarekkozak\sys\IProperties' => [
         'class' => 'jarekkozak\sys\PropertiesFile',
         'filename' => __DIR__ .'/properties.txt'

@@ -67,17 +67,6 @@ class SkillSearchTest extends DbTestCase
     }
 
 
-    /**
-     * @covers common\models\SkillSearch::search
-     * @todo   Implement testSearch().
-     */
-    public function testSearch()
-    {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
-    }
 
     /**
      * @covers common\models\SkillSearch::getUnassignedSkillsQuery

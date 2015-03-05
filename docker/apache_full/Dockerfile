@@ -8,7 +8,12 @@ ADD tmp/app.tar /app
 # or change app configuration to use plain authentication
 COPY ./tmp/properties.txt /app/common/config/properties.txt
 
+ADD front.sh /front.sh
+ADD back.sh /back.sh
+
+RUN chmod 755 /*.sh
+
 # COPY skills.conf /etc/apache2/conf-enabled/
 EXPOSE 80
 WORKDIR /app
-CMD ["/run.sh"]
+CMD ["/front.sh"]

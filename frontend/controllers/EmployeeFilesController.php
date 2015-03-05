@@ -16,10 +16,13 @@ class EmployeeFilesController extends Controller {
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['get'],
                 'rules' => [
                     [
                         'actions' => ['get'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                    [
                         'allow' => true,
                         'roles' => ['@'],
                     ],

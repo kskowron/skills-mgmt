@@ -2,15 +2,14 @@
 
 namespace frontend\controllers;
 
+use common\lib\util\SkillsHelper;
 use common\models\Employee;
 use common\models\EmployeeSkill;
 use common\models\Skill;
 use common\models\SkillLevelSearch;
-use common\models\User;
 use frontend\models\AvailableSkillsSearch;
 use frontend\models\MySkillsSearch;
 use jarekkozak\helpers\FlashHelper;
-use common\lib\util\SkillsHelper;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
@@ -23,6 +22,16 @@ use yii\web\NotFoundHttpException;
 class MySkillsController extends Controller
 {
 
+    protected $employee;
+
+
+    public function init()
+    {
+        if(($this->employee =  Employee::findOne(['user_id'=>  \Yii::$app->user->id]))==NULL){
+            throw new NotFoundHttpException();
+        }
+        return parent::init();
+    }
     /**
      * @inheritdoc
      */
@@ -31,12 +40,14 @@ class MySkillsController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['list','add-skill','delete-skill','gap-list','update-skill'],
                 'rules' => [
                     [
-                        'actions' => ['list','add-skill','delete-skill','gap-list','update-skill'],
                         'allow' => true,
                         'roles' => ['@'],
+                    ],
+                    [
+                        'allow' => false,
+                        'roles' => ['?'],
                     ],
                 ],
             ],
@@ -55,12 +66,12 @@ class MySkillsController extends Controller
      */
     public function actionList()
     {
-        $searchModel  = new MySkillsSearch();
+        $searchModel  = new MySkillsSearch(['employee_ids'=>$this->employee->id]);
         $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams());
 
         $searchLevelsModel = new SkillLevelSearch();
-        $levels            = ArrayHelper::map($searchLevelsModel->getLevelList()->all(),
-                'id', 'name');
+
+        $levels = ArrayHelper::map($searchLevelsModel->getLevelList()->all(), 'id', 'name');
 
         // validate if there is a editable input saved via AJAX
         if (Yii::$app->request->post('hasEditable') && Yii::$app->request->post('editableKey')) {
@@ -94,6 +105,7 @@ class MySkillsController extends Controller
                         $model->skill_level_id = $posted['level_name'];
                     }
                 }
+                $model->setEmployee_ids($this->employee->id);
                 $model->updateMySkill();
                 $out = Json::encode(['output' => $output, 'message' => '']);
             }
@@ -104,7 +116,7 @@ class MySkillsController extends Controller
 
         return $this->render('list',
                 [
-                'employee' => $searchModel->loggedEmployee,
+                'employee' => $this->employee,
                 'dataProvider' => $dataProvider,
                 'searchModel' => $searchModel,
                 'levels' => $levels,
@@ -120,13 +132,12 @@ class MySkillsController extends Controller
             throw new NotFoundHttpException();
         };
 
-        $searchModel = new MySkillsSearch();
-        $employee    = $searchModel->loggedEmployee;
+        $searchModel = new MySkillsSearch(['employee_ids'=>$this->employee->id]);
 
         $model = new EmployeeSkill();
 
         if ($model->load(Yii::$app->request->post())) {
-            $model->employee_id = $employee->id;
+            $model->employee_id = $this->employee->id;
             $model->skill_id    = $skill->id;
             if ($model->save()) {
                 FlashHelper::setFlashSuccess(Yii::t('skills',
@@ -142,7 +153,7 @@ class MySkillsController extends Controller
                 [
                 'model' => $model,
                 'skill' => $skill,
-                'employee' => $employee,
+                'employee' => $this->employee,
                 'levels' => SkillsHelper::getLevels(),
                 'last_activity' => SkillsHelper::getYearsList(),
                 'years_of_experience' => SkillsHelper::getDurationList()
@@ -152,15 +163,11 @@ class MySkillsController extends Controller
     public function actionUpdateSkill($id)
     {
 
-        if (($model = \common\models\base\EmployeeSkill::findOne($id)) == NULL) {
+        if (($model = EmployeeSkill::findOne($id)) == NULL) {
             throw new NotFoundHttpException();
         };
-
-        $searchModel = new MySkillsSearch();
-        $employee    = $searchModel->loggedEmployee;
-
         if ($model->load(Yii::$app->request->post())) {
-            $model->employee_id = $employee->id;
+            $model->employee_id = $this->employee->id;
             if ($model->save()) {
                 FlashHelper::setFlashSuccess(Yii::t('skills',
                         'Your new skill has been updated'));
@@ -175,12 +182,14 @@ class MySkillsController extends Controller
                 [
                 'model' => $model,
                 'skill' => $model->skill,
-                'employee' => $employee,
+                'employee' => $this->employee,
                 'levels' => SkillsHelper::getLevels(),
                 'last_activity' => SkillsHelper::getYearsList(),
                 'years_of_experience' => SkillsHelper::getDurationList()
         ]);
     }
+
+
 
     /**
      * List of all skills not possesed by logged employee
@@ -188,15 +197,12 @@ class MySkillsController extends Controller
      */
     public function actionGapList()
     {
-        /* @var $user User */
-        $user         = Yii::$app->user;
-        $searchModel  = new AvailableSkillsSearch();
-        $employee     = Employee::findOne(['user_id' => $user->id]);
+        $searchModel  = new AvailableSkillsSearch(['for_employee_id'=>$this->employee->id]);
         $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams());
 
         return $this->render('gap-list',
                 [
-                'employee' => $employee,
+                'employee' => $this->employee,
                 'dataProvider' => $dataProvider,
                 'searchModel' => $searchModel,
         ]);
@@ -210,9 +216,9 @@ class MySkillsController extends Controller
         if (($model = MySkillsSearch::findOne($id)) == NULL) {
             throw new NotFoundHttpException();
         }
+        $model->setEmployee_ids($this->employee->id);
         if ($model->deleteSkill()) {
-            FlashHelper::setFlashSuccess(Yii::t('skills',
-                    'You skill has been removed'));
+            FlashHelper::setFlashSuccess(Yii::t('skills', 'You skill has been removed'));
         } else {
 
         }

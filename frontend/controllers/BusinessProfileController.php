@@ -18,10 +18,8 @@ class BusinessProfileController extends Controller {
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['view'],
                 'rules' => [
                     [
-                        'actions' => ['view'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],

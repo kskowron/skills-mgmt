@@ -41,6 +41,9 @@ class FixturesMapHelper
             'employeeSkill' => [
                 'class' => EmployeeSkillFixture::className(),
             ],
+            'employeeRole' => [
+                'class' => EmployeeRoleFixture::className(),
+            ],
             'location' => [
                 'class' => LocationFixture::className(),
             ],

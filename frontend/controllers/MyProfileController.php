@@ -34,10 +34,8 @@ class MyProfileController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['create', 'update', 'delete', 'view'],
                 'rules' => [
                     [
-                        'actions' => ['create', 'update', 'delete', 'view'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -62,17 +60,18 @@ class MyProfileController extends Controller
         if (($model = Employee::findOne(['user_id' => \Yii::$app->user->id])) == NULL) {
             $model = new Employee();
         };
-        
+
         if ($model->load(Yii::$app->request->post())) {
             $model->user_id = \Yii::$app->user->id;
             if ($model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);
             }
-        } 
-        return $this->render('view', [
+        }
+        return $this->render('view',
+                [
                 'model' => $model,
-                'businessProfiles'=>$model->getEmployeeBusinessProfiles()->orderBy('profile_order')->all()
-            ]);
+                'businessProfiles' => $model->getEmployeeBusinessProfiles()->orderBy('profile_order')->all()
+        ]);
     }
 
     /**

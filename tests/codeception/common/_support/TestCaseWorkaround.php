@@ -21,7 +21,7 @@ class TestCaseWorkaround extends \yii\codeception\TestCase
      */
     protected function setUp()
     {
-        if ($this->actor != 0) {
+        if ($this->actor != FALSE) {
             parent::setUp();
         } else {
             $this->mockApplication();
@@ -35,7 +35,7 @@ class TestCaseWorkaround extends \yii\codeception\TestCase
      */
     protected function tearDown()
     {
-        if ($this->actor != 0) {
+        if ($this->actor != FALSE) {
             parent::tearDown();
         } else {
             $this->destroyApplication();

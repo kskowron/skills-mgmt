@@ -4,6 +4,7 @@ namespace common\models;
 
 use tests\codeception\common\fixtures\EmployeeBusinessProfileFixture;
 use tests\codeception\common\fixtures\EmployeeFixture;
+use tests\codeception\common\fixtures\EmployeeRoleFixture;
 
 
 /**
@@ -23,6 +24,9 @@ class EmployeeTest extends \tests\codeception\common\unit\DbTestCase
             ],
             'employee' => [
                 'class' => EmployeeFixture::className(),
+            ],
+            'employee_role' => [
+                'class' => EmployeeRoleFixture::className(),
             ],
         ];
     }
@@ -51,29 +55,6 @@ class EmployeeTest extends \tests\codeception\common\unit\DbTestCase
         parent::tearDown();
     }
 
-    /**
-     * @covers common\models\Employee::rules
-     * @todo   Implement testRules().
-     */
-    public function testRules()
-    {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
-    }
-
-    /**
-     * @covers common\models\Employee::behaviors
-     * @todo   Implement testBehaviors().
-     */
-    public function testBehaviors()
-    {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
-    }
 
     /**
      * @covers common\models\Employee::getLocationName
@@ -86,26 +67,22 @@ class EmployeeTest extends \tests\codeception\common\unit\DbTestCase
 
     /**
      * @covers common\models\Employee::getFullname
-     * @todo   Implement testGetFullname().
      */
     public function testGetFullname()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $employee = Employee::findOne(1);
+        $this->assertEquals('user1 AABBCC',$employee->fullName);
     }
 
     /**
      * @covers common\models\Employee::isAdministrator
-     * @todo   Implement testIsAdministrator().
      */
     public function testIsAdministrator()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $employee = Employee::findOne(1);
+        $this->assertTrue($employee->isAdministrator());
+        $employee = Employee::findOne(2);
+        $this->assertFalse($employee->isAdministrator());
     }
 
     /**
@@ -116,7 +93,7 @@ class EmployeeTest extends \tests\codeception\common\unit\DbTestCase
         $this->assertNotNull($employee = Employee::findOne(1));
         $this->assertEquals('BPROFILE1', $employee->getPrimaryBusinessProfile());
 
-        $this->assertNotNull($employee = Employee::findOne(2));
+        $this->assertNotNull($employee = Employee::findOne(3));
         $this->assertNull($employee->getPrimaryBusinessProfile());
     }
 
@@ -128,7 +105,7 @@ class EmployeeTest extends \tests\codeception\common\unit\DbTestCase
         $this->assertNotNull($employee = Employee::findOne(1));
         $this->assertEquals('BPROFILE2,BPROFILE3,', $employee->getSecondaryBusinessProfiles());
 
-        $this->assertNotNull($employee = Employee::findOne(2));
+        $this->assertNotNull($employee = Employee::findOne(3));
         $this->assertNull($employee->getSecondaryBusinessProfiles());
     }
 }

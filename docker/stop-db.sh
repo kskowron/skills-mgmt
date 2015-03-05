@@ -1,6 +1,7 @@
 #!/bin/bash
-. app.properties
+. functions.sh
 echo "Stop databases..."
-docker stop $MONGOCONT 
-docker stop $MYSQLCONT
+STOPMySQL()
+STOPMongo()
+
  

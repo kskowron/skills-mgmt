@@ -19,6 +19,17 @@ class EmployeeBusinessProfile extends \common\models\base\EmployeeBusinessProfil
     }
 
     /**
+     * @inheritdoc
+     */
+    public function rules()
+    {
+        return [
+            [['business_profile_id', 'employee_id'], 'required'],
+            [['business_profile_id', 'employee_id', 'profile_order'], 'integer']
+        ];
+    }
+
+    /**
      * Reorder employee business profiles
      *
      * @param array|null $profiles
@@ -28,7 +39,7 @@ class EmployeeBusinessProfile extends \common\models\base\EmployeeBusinessProfil
     protected function reorderProfiles($profiles = null)
     {
         if ($profiles == NULL) {
-            $profiles = base\EmployeeBusinessProfile::find(['employee_id' => $this->employee_id])->orderBy('profile_order')->all();
+            $profiles = EmployeeBusinessProfile::findByCondition(['employee_id' => $this->employee_id])->orderBy('profile_order')->all();
         }
         $trans = $this->getDb()->beginTransaction();
         try {
@@ -54,7 +65,7 @@ class EmployeeBusinessProfile extends \common\models\base\EmployeeBusinessProfil
      */
     public function moveUp()
     {
-        $all  = base\EmployeeBusinessProfile::find(['employee_id' => $this->employee_id])->orderBy('profile_order')->all();
+        $all  = base\EmployeeBusinessProfile::findByCondition(['employee_id' => $this->employee_id])->orderBy('profile_order')->all();
         $temp = NULL;
         foreach ($all as $key => $profile) {
             if ($profile->id == $this->id && $temp !== NULL) {
@@ -74,7 +85,7 @@ class EmployeeBusinessProfile extends \common\models\base\EmployeeBusinessProfil
      */
     public function moveDown()
     {
-        $all  = base\EmployeeBusinessProfile::find(['employee_id' => $this->employee_id])->orderBy('profile_order')->all();
+        $all  = EmployeeBusinessProfile::findByCondition(['employee_id' => $this->employee_id])->orderBy('profile_order')->all();
         $stop = count($all) - 1;
         foreach ($all as $key => $profile) {
             if ($profile->id == $this->id && $key < $stop) {
@@ -108,15 +119,17 @@ class EmployeeBusinessProfile extends \common\models\base\EmployeeBusinessProfil
         return FALSE;
     }
 
-    public function beforeValidate()
+    public function beforeSave($insert)
     {
-        if ($this->isNewRecord) {
-            $this->profile_order = 1;
+        if ($insert) {
             if (($employee = Employee::findOne($this->employee_id)) !== NULL) {
-                $this->profile_order = $employee->getEmployeeBusinessProfiles()->count() + 1;
-            };
+                $this->profile_order =
+                    $employee->getEmployeeBusinessProfiles()->count() + 1;
+            }else{
+                $this->profile_order = 1;
+            }
         }
-        return parent::beforeValidate();
+        return parent::beforeSave($insert);
     }
 
     public function save($runValidation = true, $attributeNames = null)

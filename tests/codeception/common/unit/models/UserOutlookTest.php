@@ -46,7 +46,6 @@ class UserOutlookTest extends DbTestCase
 
     /**
      * @covers common\models\UserOutlook::validatePassword
-     * @todo   Implement testValidatePassword().
      */
     public function testValidatePassword()
     {
@@ -58,10 +57,27 @@ class UserOutlookTest extends DbTestCase
         $user->email    = $email;
         $user->setPassword($password);
         $user->generateAuthKey();
-        if ($user->checkPasswordPolicy($password) && $user->save()) {
-            return $user;
-        }
+        $this->assertTrue($user->checkPasswordPolicy($password));
     }
+
+    /**
+     * @covers common\models\UserOutlook::validatePassword
+     */
+    public function testValidatePasswordError()
+    {
+
+        $email          = $this->property->getProperty('exchangeUsername');
+        $password       = 'bad-password';
+        $user           = new UserOutlook();
+        $user->username = 'test';
+        $user->email    = $email;
+        $user->setPassword($password);
+        $user->generateAuthKey();
+        $this->assertFalse($user->checkPasswordPolicy($password));
+        
+    }
+
+
 
     /**
      * @covers common\models\UserOutlook::checkPasswordPolicy

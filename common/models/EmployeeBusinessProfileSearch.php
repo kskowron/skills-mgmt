@@ -2,7 +2,6 @@
 
 namespace common\models;
 
-use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use common\models\EmployeeBusinessProfile;
@@ -25,17 +24,15 @@ class EmployeeBusinessProfileSearch extends EmployeeBusinessProfile
         return Model::scenarios();
     }
 
-    public function search($params, $employee_id = null)
+    /**
+     * General employee skills search
+     * 
+     * @param array $params
+     * @return ActiveDataProvider
+     */
+    public function search($params)
     {
-
-
         $query = EmployeeBusinessProfile::find();
-
-        if ($employee_id != NULL) {
-            $query->andFilterWhere([
-                'employee_id' => $employee_id,
-            ])->orderBy('profile_order');
-        }
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -48,8 +45,30 @@ class EmployeeBusinessProfileSearch extends EmployeeBusinessProfile
         $query->andFilterWhere([
             'id' => $this->id,
             'business_profile_id' => $this->business_profile_id,
-            'profile_order' => $this->profile_order
+            'profile_order' => $this->profile_order,
+            'employee_id' => $this->employee_id
         ]);
+        return $dataProvider;
+    }
+
+    /**
+     * Search for business profiles for given employee
+     * 
+     * @param int $employee_id
+     * @return ActiveDataProvider
+     */
+    public function search4employee($employee_id)
+    {
+        $query = EmployeeBusinessProfile::find();
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
+        $query->andFilterWhere([
+            'employee_id' => (int)$employee_id,
+        ])->orderBy('profile_order');
+
         return $dataProvider;
     }
 }

@@ -8,7 +8,6 @@ use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\web\Session;
 
 class ProfileController extends Controller {
 
@@ -16,10 +15,8 @@ class ProfileController extends Controller {
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['view'],
                 'rules' => [
                     [
-                        'actions' => ['view'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],

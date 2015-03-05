@@ -51,17 +51,23 @@ class SkillSearch extends Skill
     }
 
     /**
-     * Create query for unassigned skills
-     * 
+     * Create query for unassigned skills for given employee
+     *
+     * You can use aliases:
+     *
+     * a -> EmployeeSkill <br/>
+     * b -> Category<br/>
+     * t -> Skill<br/>
+     *
      * @param int $employee_id
      * @return \yii\db\Query
      */
     public function getUnassignedSkillsQuery($employee_id){
         $subQuery = EmployeeSkill::find()->andWhere('employee_id = :id', [':id'=>$employee_id]);
         /* @var $query Query */
-        $query = self::find();
-        $query->leftJoin(['a'=>$subQuery], self::tableName().'.id = a.skill_id');
-        $query->leftJoin(['b'=>  Category::tableName()],self::tableName().'.category_id = b.id');
+        $query = self::find()->from(['t'=>self::tableName()]);
+        $query->leftJoin(['a'=>$subQuery], 't.id = a.skill_id');
+        $query->leftJoin(['b'=>Category::tableName()],'t.category_id = b.id');
         $query->andWhere('a.skill_id IS NULL');
         return $query;
     }
