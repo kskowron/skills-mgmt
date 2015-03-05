@@ -2,12 +2,15 @@
 
 namespace frontend\controllers;
 
-use Yii;
+use common\models\Employee;
 use common\models\EmployeeBusinessProfile;
 use common\models\EmployeeBusinessProfileSearch;
+use jarekkozak\helpers\FlashHelper;
+use Yii;
+use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * Controller for editing logged employee business profiles
@@ -21,16 +24,26 @@ class MyBusinessProfileController extends Controller
 
     public function init()
     {
-        parent::init();
-        if (($employee = \common\models\Employee::findOne(\Yii::$app->user->id))
-            !== NULL) {
-            $this->employee_id = $employee->id;
-        }
+        if (($employee = Employee::findOne(['user_id' => \Yii::$app->user->id]))
+            == NULL) {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        };
+        $this->employee_id = $employee->id;
+        return parent::init();
     }
 
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -47,12 +60,12 @@ class MyBusinessProfileController extends Controller
     public function actionIndex()
     {
         $searchModel  = new EmployeeBusinessProfileSearch;
-        $dataProvider = $searchModel->employeeProfilesSearch($this->employee_id);
+        $dataProvider = $searchModel->search4employee($this->employee_id);
 
         return $this->render('index',
                 [
                 'dataProvider' => $dataProvider,
-                'searchModel' => $searchModel,
+                'searchModel' => $searchModel
         ]);
     }
 
@@ -84,12 +97,8 @@ class MyBusinessProfileController extends Controller
             if ($model->save()) {
                 return $this->redirect(['index']);
             }
-        } else {
-            return $this->render('create',
-                    [
-                    'model' => $model,
-            ]);
         }
+        return $this->render('create', ['model' => $model]);
     }
 
     /**
@@ -107,9 +116,8 @@ class MyBusinessProfileController extends Controller
             if ($model->save()) {
                 return $this->redirect(['index']);
             }
-        } else {
-            return $this->render('update', ['model' => $model,]);
         }
+        return $this->render('update', ['model' => $model,]);
     }
 
     /**
@@ -120,24 +128,27 @@ class MyBusinessProfileController extends Controller
      */
     public function actionDelete($id)
     {
-        if($this->findModel($id)->deleteProfile()){
-            \jarekkozak\helpers\FlashHelper::setFlashSuccess(\Yii::t('skills','Profile successyfully removed'));
+        if ($this->findModel($id)->deleteProfile()) {
+            FlashHelper::setFlashSuccess(\Yii::t('skills',
+                    'Profile successyfully removed'));
         }
         return $this->redirect(['index']);
     }
 
     public function actionMoveUp($id)
     {
-        if($this->findModel($id)->moveUp()){
-            \jarekkozak\helpers\FlashHelper::setFlashSuccess(\Yii::t('skills','Profile successyfully moved up!'));
+        if ($this->findModel($id)->moveUp()) {
+            FlashHelper::setFlashSuccess(\Yii::t('skills',
+                    'Profile successyfully moved up!'));
         }
         return $this->redirect(['index']);
     }
 
     public function actionMoveDown($id)
     {
-        if($this->findModel($id)->moveDown()){
-            \jarekkozak\helpers\FlashHelper::setFlashSuccess(\Yii::t('skills','Profile successyfully moved down!'));
+        if ($this->findModel($id)->moveDown()) {
+            FlashHelper::setFlashSuccess(\Yii::t('skills',
+                    'Profile successyfully moved down!'));
         }
         return $this->redirect(['index']);
     }
@@ -154,8 +165,7 @@ class MyBusinessProfileController extends Controller
         if (($model = EmployeeBusinessProfile::findOne(['id' => $id, 'employee_id' => $this->employee_id]))
             !== null) {
             return $model;
-        } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
         }
+        throw new NotFoundHttpException('The requested page does not exist.');
     }
 }
